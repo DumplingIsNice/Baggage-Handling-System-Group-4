@@ -1,1 +1,1 @@
-java -jar -Xincgc editor.jar %1
+java -jar editor.jar %1

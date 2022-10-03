@@ -189,10 +189,10 @@
           <Parameter Name="PE" Value="0" />
         </FB>
         <FB Name="FCTwo" Type="TwoConCtl" x="2861.111" y="2316.6665" >
-          <Parameter Name="Candidate" Value="0" />
+          <Parameter Name="Candidate" Value="1" />
         </FB>
         <FB Name="TCOne" Type="ThreeConCtl" x="6050.0" y="2222.2222" >
-          <Parameter Name="Candidate" Value="0" />
+          <Parameter Name="Candidate" Value="1" />
         </FB>
         <FB Name="FCThree" Type="TwoConCtl" x="4911.111" y="494.44443" >
           <Parameter Name="Candidate" Value="0" />
@@ -252,11 +252,10 @@
           <Connection Source="FCOne.INITO" Destination="FCThree.INIT" dx1="111.11111" />
           <Connection Source="PE.INITO" Destination="FCTwo.INIT" dx1="722.22217" />
           <Connection Source="FCTwo.INITO" Destination="FCFour.INIT" dx1="477.77777" />
-          <Connection Source="FCFour.INITO" Destination="TCOne.INIT" dx1="522.2222" />
         </EventConnections>
         <DataConnections>
           <Connection Source="FCTwo.BlockCon" Destination="TCOne.Block" dx1="1538.8888" />
-          <Connection Source="TCOne.BlockCon" Destination="FCTwo.Block" dx1="27.777777" dx2="77.77777" dy="144.44444" />
+          <Connection Source="TCOne.BlockCon" Destination="FCTwo.Block" dx1="27.777777" dx2="5.5555553" dy="144.44444" />
           <Connection Source="TCOne.MotoRotate1" Destination="ConControl.SD_3" dx1="822.22217" />
           <Connection Source="TCOne.MotoRotate2" Destination="ConControl.SD_4" dx1="849.99994" />
           <Connection Source="TCOne.MotoRotate3" Destination="ConControl.SD_5" dx1="877.7778" />
