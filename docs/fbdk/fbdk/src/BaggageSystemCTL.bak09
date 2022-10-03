@@ -252,11 +252,11 @@
           <Connection Source="BagIn3.INITO" Destination="BagInFour.INIT" dx1="27.777777" dx2="333.3333" dy="-161.1111" />
           <Connection Source="BagIn4.INITO" Destination="PE.INIT" dx1="172.22221" dx2="26.666666" dy="693.3333" />
           <Connection Source="PE.INITO" Destination="FCOne.INIT" dx1="88.888885" />
-          <Connection Source="PE.INITO" Destination="FCTwo.INIT" dx1="88.888885" />
-          <Connection Source="PE.INITO" Destination="FCThree.INIT" dx1="88.888885" />
-          <Connection Source="PE.INITO" Destination="FCFour.INIT" dx1="88.888885" />
-          <Connection Source="FCFour.INITO" Destination="TCOne.INIT" dx1="1749.9999" />
-          <Connection Source="FCOne.INITO" Destination="ConControl.INIT" dx1="422.2222" />
+          <Connection Source="FCOne.INITO" Destination="FCTwo.INIT" dx1="27.777777" dx2="0.0" dy="-355.55554" />
+          <Connection Source="FCTwo.INITO" Destination="FCThree.INIT" dx1="27.777777" dx2="0.0" dy="-1550.0" />
+          <Connection Source="FCThree.INITO" Destination="FCFour.INIT" dx1="27.777777" dx2="5.5555553" dy="-2700.0" />
+          <Connection Source="FCFour.INITO" Destination="TCOne.INIT" dx1="1450.0" />
+          <Connection Source="TCOne.INITO" Destination="ConControl.INIT" dx1="88.888885" />
         </EventConnections>
         <DataConnections>
           <Connection Source="TCOne.MotoRotate1" Destination="ConControl.SD_3" dx1="822.22217" />
