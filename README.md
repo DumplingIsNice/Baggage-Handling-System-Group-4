@@ -37,9 +37,9 @@ Implementing a baggage handling system (BHS) by high-level abstraction with func
 
 ### Algorithms Used
 
-- Central Server (CS1) by
-- Ring Token (CS1) by
-- Multicast (CS1) by
+- Central Server (CS1) by Andre
+- Ring Token (CS1) by Darpan
+- Multicast (CS1) by Hao
 
 ### Instructions
 
