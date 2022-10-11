@@ -43,7 +43,7 @@ Implementing a baggage handling system (BHS) by high-level abstraction with func
 
 ### Instructions
 
-To run this fbdk project... TBD
+To run this fbdk project, open command prompt and set directory to be in fbdk. Enter command "java  -jar editor.jar". 
 
 Install `openjdk 11.0.16` or other java SDK/JRE compatible to the provided FBDK version.
 - Launch the application...
