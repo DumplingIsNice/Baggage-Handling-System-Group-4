@@ -12,11 +12,22 @@ This section acts as landing page for the team during development & design.
   - Due Oct 21 at 11:59pm Oct 21 at 11:59pm
   - Demo submitted as a `.zip`.
   - Include `README`
+    - explains what you have implemented, which algorithm for which section, and what steps are needed to get your assignment running.
   - Demonstrate three ME algorithms.
     - Individual marks and questions on ME implemented.
     - Group mark from integration into one BHS.
 - **Assignment 2 (Part B) - Final Report**
   - Due Oct 24 at 11:59pm Oct 24 at 11:59pm
+
+## Submission 2: Assignment 2 (Part B) - Demo & Interview
+
+- **Interview venue:** 405.721
+
+### Timeline (9:30 arrival, 9:45 to 10:00)
+
+- 2 minutes: Demonstrate the working of the entire BHS system. You should have print statements to show token passing in central server and ring token algorithms, and to show Lamport clock updating in multicast.
+- 2 minutes each: Each Critical Section implementation has to be explained by each student. You have to show the function blocks and the ECC you have designed, and explain the working using state-based design.
+- 5 minutes: The teaching team will ask questions to each student.
 
 ## Additional Info
 
