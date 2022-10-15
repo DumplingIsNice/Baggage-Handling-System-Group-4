@@ -210,7 +210,6 @@ private void state_COMPARE(){
   eccState = index_COMPARE;
   alg_COMP();
     if(!MeFirst.value&YouFirst.value) state_YOUFIRST();
-    else if(MeFirst.value&!YouFIRST) state_HELD1();
 }
 private static final int index_HELD1 = 7;
 private void state_HELD1(){
@@ -235,14 +234,6 @@ private void state_YOUFIRST(){
   REPLY.serviceEvent(this);
   CNF.serviceEvent(this);
 }
-private static final int index_YouNext = 10;
-private void state_YouNext(){
-  eccState = index_YouNext;
-  alg_YOUNEXT();
-  REPLY.serviceEvent(this);
-  CNF.serviceEvent(this);
-state_START();
-}
 /** The default constructor. */
 public MulticastConveyorCTL(){
     super();
@@ -266,8 +257,6 @@ public MulticastConveyorCTL(){
   public void service_REQ(){
     if ((eccState == index_START) && (Candidate.value)) state_REQ();
     else if ((eccState == index_START) && (PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (!PE.value)) state_YouNext();
-    else if ((eccState == index_HELD2) && (!PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
@@ -281,7 +270,6 @@ public MulticastConveyorCTL(){
   public void service_LISTEN(){
     if ((eccState == index_WANTING)) state_COMPARE();
     else if ((eccState == index_YOUFIRST)) state_HELD2();
-    else if ((eccState == index_START)) state_YouNext();
   }
   /** ALGORITHM INIT IN ST*/
 public void alg_INIT(){

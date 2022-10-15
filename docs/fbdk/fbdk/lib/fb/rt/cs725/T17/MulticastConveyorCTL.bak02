@@ -35,10 +35,6 @@ public class MulticastConveyorCTL extends FBInstance
   public BOOL lastPE = new BOOL();
 /** VAR lastBlock */
   public BOOL lastBlock = new BOOL();
-/** VAR MeFirst */
-  public BOOL MeFirst = new BOOL();
-/** VAR YouFirst */
-  public BOOL YouFirst = new BOOL();
 /** Initialization Request */
  public EventServer INIT = new EventInput(this);
 /** Normal Execution Request */
@@ -198,51 +194,6 @@ private void state_CAS_STOP(){
   CNF.serviceEvent(this);
 state_START();
 }
-private static final int index_WANTING = 5;
-private void state_WANTING(){
-  eccState = index_WANTING;
-  alg_STOP();
-  STOP.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
-private static final int index_COMPARE = 6;
-private void state_COMPARE(){
-  eccState = index_COMPARE;
-  alg_COMP();
-    if(!MeFirst.value&YouFirst.value) state_YOUFIRST();
-    else if(MeFirst.value&!YouFIRST) state_HELD1();
-}
-private static final int index_HELD1 = 7;
-private void state_HELD1(){
-  eccState = index_HELD1;
-  alg_START();
-  START.serviceEvent(this);
-  alg_CLOCK();
-  CNF.serviceEvent(this);
-}
-private static final int index_HELD2 = 8;
-private void state_HELD2(){
-  eccState = index_HELD2;
-  alg_START();
-  START.serviceEvent(this);
-  alg_CLOCK();
-  CNF.serviceEvent(this);
-}
-private static final int index_YOUFIRST = 9;
-private void state_YOUFIRST(){
-  eccState = index_YOUFIRST;
-  alg_YOUFIRST();
-  REPLY.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
-private static final int index_YouNext = 10;
-private void state_YouNext(){
-  eccState = index_YouNext;
-  alg_YOUNEXT();
-  REPLY.serviceEvent(this);
-  CNF.serviceEvent(this);
-state_START();
-}
 /** The default constructor. */
 public MulticastConveyorCTL(){
     super();
@@ -265,9 +216,6 @@ public MulticastConveyorCTL(){
 /** Services the REQ event. */
   public void service_REQ(){
     if ((eccState == index_START) && (Candidate.value)) state_REQ();
-    else if ((eccState == index_START) && (PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (!PE.value)) state_YouNext();
-    else if ((eccState == index_HELD2) && (!PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
@@ -279,9 +227,6 @@ public MulticastConveyorCTL(){
   }
 /** Services the LISTEN event. */
   public void service_LISTEN(){
-    if ((eccState == index_WANTING)) state_COMPARE();
-    else if ((eccState == index_YOUFIRST)) state_HELD2();
-    else if ((eccState == index_START)) state_YouNext();
   }
   /** ALGORITHM INIT IN ST*/
 public void alg_INIT(){
@@ -334,21 +279,5 @@ MotoRotate.value=false;
 System.out.println(this+" Stop "+MotoRotate.value);
 
 System.out.println("Stop "+MotoRotate.value);
-}
-  /** ALGORITHM COMP IN Java*/
-public void alg_COMP(){
-
-}
-  /** ALGORITHM YOUFIRST IN Java*/
-public void alg_YOUFIRST(){
-
-}
-  /** ALGORITHM CLOCK IN Java*/
-public void alg_CLOCK(){
-
-}
-  /** ALGORITHM YOUNEXT IN Java*/
-public void alg_YOUNEXT(){
-
 }
 }

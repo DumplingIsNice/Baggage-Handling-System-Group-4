@@ -110,10 +110,6 @@
         <ECAction Algorithm="YOUFIRST" Output="REPLY" />
         <ECAction Output="CNF" />
       </ECState>
-      <ECState Name="YouNext" x="1016.6666" y="1594.4443" >
-        <ECAction Algorithm="YOUNEXT" Output="REPLY" />
-        <ECAction Output="CNF" />
-      </ECState>
       <ECTransition Source="START" Destination="INIT" Condition="INIT" x="2105.5554" y="688.88885" />
       <ECTransition Source="INIT" Destination="START" Condition="1" x="2333.3333" y="727.7778" />
       <ECTransition Source="START" Destination="REQ" Condition="REQ&#38;Candidate" x="1477.7777" y="733.3333" />
@@ -126,11 +122,6 @@
       <ECTransition Source="WANTING" Destination="COMPARE" Condition="LISTEN" x="1988.8888" y="1783.3333" />
       <ECTransition Source="YOUFIRST" Destination="HELD2" Condition="LISTEN" x="1022.22217" y="2961.111" />
       <ECTransition Source="COMPARE" Destination="YOUFIRST" Condition="!MeFirst&#38;YouFirst" x="2294.4443" y="2288.889" />
-      <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFIRST" x="1327.7777" y="2144.4443" />
-      <ECTransition Source="HELD1" Destination="YouNext" Condition="REQ&#38;!PE" x="1016.6666" y="2022.2222" />
-      <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;!PE" x="605.55554" y="1155.5555" />
-      <ECTransition Source="YouNext" Destination="START" Condition="1" x="1144.4445" y="1233.3333" />
-      <ECTransition Source="START" Destination="YouNext" Condition="LISTEN" x="1416.6666" y="1311.1111" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
     <ST Text="MotoRotate := TRUE;&#10;Block := FALSE;&#10;&#10;System.out.println(this + &#34; &#34; + MotoRotate);&#10;System.out.println(MotoRotate);&#10;" />
