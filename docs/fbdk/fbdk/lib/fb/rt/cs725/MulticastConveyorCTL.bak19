@@ -251,20 +251,6 @@ private void state_YOUNEXT(){
   CNF.serviceEvent(this);
 state_START();
 }
-private static final int index_TEMP2 = 10;
-private void state_TEMP2(){
-  eccState = index_TEMP2;
-  alg_STOP();
-  STOP.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
-private static final int index_TEMP1 = 11;
-private void state_TEMP1(){
-  eccState = index_TEMP1;
-  alg_STOP();
-  STOP.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
 /** The default constructor. */
 public MulticastConveyorCTL(){
     super();
@@ -287,11 +273,8 @@ public MulticastConveyorCTL(){
 /** Services the REQ event. */
   public void service_REQ(){
     if ((eccState == index_START) && (!PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (PE.value&!MAIN_PE.value)) state_YOUNEXT();
-    else if ((eccState == index_HELD2) && (PE.value)) state_TEMP2();
-    else if ((eccState == index_TEMP2) && (!MAIN_PE.value)) state_START();
-    else if ((eccState == index_HELD1) && (PE.value)) state_TEMP1();
-    else if ((eccState == index_TEMP1) && (!MAIN_PE.value)) state_START();
+    else if ((eccState == index_HELD1) && (PE.value&MAIN_PE.value)) state_YOUNEXT();
+    else if ((eccState == index_HELD2) && (PE.value&!MAIN_PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){

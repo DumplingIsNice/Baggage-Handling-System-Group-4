@@ -19,8 +19,6 @@ public class MulticastTwoConCtl extends FBInstance
   public INT PID_in = new INT();
 /** VAR Tstamp_in */
   public INT Tstamp_in = new INT();
-/** VAR MAIN_PE */
-  public BOOL MAIN_PE = new BOOL();
 /** VAR MotoRotate1 */
   public BOOL MotoRotate1 = new BOOL();
 /** VAR MotoRotate2 */
@@ -78,7 +76,6 @@ public class MulticastTwoConCtl extends FBInstance
     if("PE".equals(s)) return PE;
     if("PID_in".equals(s)) return PID_in;
     if("Tstamp_in".equals(s)) return Tstamp_in;
-    if("MAIN_PE".equals(s)) return MAIN_PE;
     return super.ivNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -103,7 +100,6 @@ public class MulticastTwoConCtl extends FBInstance
     else if("PE".equals(ivName)) connect_PE((BOOL)newIV);
     else if("PID_in".equals(ivName)) connect_PID_in((INT)newIV);
     else if("Tstamp_in".equals(ivName)) connect_Tstamp_in((INT)newIV);
-    else if("MAIN_PE".equals(ivName)) connect_MAIN_PE((BOOL)newIV);
     else super.connectIV(ivName, newIV);
     }
 /** Connect the given variable to the input variable Candidate
@@ -142,14 +138,6 @@ public class MulticastTwoConCtl extends FBInstance
     Tstamp_in = newIV;
     MulticastConveyorCTL_FC12.connectIVNoException("Tstamp_in",Tstamp_in);
     }
-/** Connect the given variable to the input variable MAIN_PE
-  * @param newIV The variable to connect
-  * @throws FBRManagementException An internal connection failed.
- */
-  public void connect_MAIN_PE(BOOL newIV) throws FBRManagementException{
-    MAIN_PE = newIV;
-    MulticastConveyorCTL_FC12.connectIVNoException("MAIN_PE",MAIN_PE);
-    }
 /** FB FC11 */
   protected ConveyorCTL FC11 = new ConveyorCTL() ;
 /** FB MulticastConveyorCTL_FC12 */
@@ -182,7 +170,6 @@ public MulticastTwoConCtl(){
     Tstamp_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("Tstamp_out");
     PID_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("PID_out");
     MotoRotate2 = (BOOL)MulticastConveyorCTL_FC12.ovNamedNoException("MotoRotate");
-    MulticastConveyorCTL_FC12.connectIVNoException("MAIN_PE",MAIN_PE);
     FC11.PE.initializeNoException("0");
     FC11.Block.initializeNoException("0");
     FC11.Candidate.initializeNoException("0");

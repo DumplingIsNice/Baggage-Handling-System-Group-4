@@ -23,8 +23,6 @@ public class MulticastConveyorCTL extends FBInstance
   public INT PID_in = new INT();
 /** VAR Tstamp_in */
   public INT Tstamp_in = new INT();
-/** VAR MAIN_PE */
-  public BOOL MAIN_PE = new BOOL();
 /** Output event qualifier */
   public BOOL MotoRotate = new BOOL();
 /** VAR BlockCon */
@@ -98,7 +96,6 @@ public class MulticastConveyorCTL extends FBInstance
     if("MyTstamp".equals(s)) return MyTstamp;
     if("PID_in".equals(s)) return PID_in;
     if("Tstamp_in".equals(s)) return Tstamp_in;
-    if("MAIN_PE".equals(s)) return MAIN_PE;
     return super.ivNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -124,7 +121,6 @@ public class MulticastConveyorCTL extends FBInstance
     else if("MyTstamp".equals(ivName)) connect_MyTstamp((INT)newIV);
     else if("PID_in".equals(ivName)) connect_PID_in((INT)newIV);
     else if("Tstamp_in".equals(ivName)) connect_Tstamp_in((INT)newIV);
-    else if("MAIN_PE".equals(ivName)) connect_MAIN_PE((BOOL)newIV);
     else super.connectIV(ivName, newIV);
     }
 /** Connect the given variable to the input variable PE
@@ -169,12 +165,6 @@ public class MulticastConveyorCTL extends FBInstance
   public void connect_Tstamp_in(INT newIV){
     Tstamp_in = newIV;
     }
-/** Connect the given variable to the input variable MAIN_PE
-  * @param newIV The variable to connect
- */
-  public void connect_MAIN_PE(BOOL newIV){
-    MAIN_PE = newIV;
-    }
 private static final int index_START = 0;
 private void state_START(){
   eccState = index_START;
@@ -210,7 +200,6 @@ private void state_WANTING(){
   eccState = index_WANTING;
   alg_STOP();
   STOP.serviceEvent(this);
-  REPLY.serviceEvent(this);
   CNF.serviceEvent(this);
 }
 private static final int index_COMPARE = 5;
@@ -251,20 +240,6 @@ private void state_YOUNEXT(){
   CNF.serviceEvent(this);
 state_START();
 }
-private static final int index_TEMP2 = 10;
-private void state_TEMP2(){
-  eccState = index_TEMP2;
-  alg_STOP();
-  STOP.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
-private static final int index_TEMP1 = 11;
-private void state_TEMP1(){
-  eccState = index_TEMP1;
-  alg_STOP();
-  STOP.serviceEvent(this);
-  CNF.serviceEvent(this);
-}
 /** The default constructor. */
 public MulticastConveyorCTL(){
     super();
@@ -287,11 +262,8 @@ public MulticastConveyorCTL(){
 /** Services the REQ event. */
   public void service_REQ(){
     if ((eccState == index_START) && (!PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (PE.value&!MAIN_PE.value)) state_YOUNEXT();
-    else if ((eccState == index_HELD2) && (PE.value)) state_TEMP2();
-    else if ((eccState == index_TEMP2) && (!MAIN_PE.value)) state_START();
-    else if ((eccState == index_HELD1) && (PE.value)) state_TEMP1();
-    else if ((eccState == index_TEMP1) && (!MAIN_PE.value)) state_START();
+    else if ((eccState == index_HELD1) && (PE.value)) state_YOUNEXT();
+    else if ((eccState == index_HELD2) && (PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
@@ -347,21 +319,20 @@ System.out.println(this+" Stop "+MotoRotate.value);
 public void alg_COMP(){
 System.out.println("In COMP State");
 if(MyTstamp.value > Tstamp_in.value){
-MeFirst.value = false;
-YouFirst.value = true;
+	MeFirst.value = false;
+	YouFirst.value = true;
 }else if (MyTstamp.value < Tstamp_in.value){
-MeFirst.value = true;
-YouFirst.value = false;
+	MeFirst.value = true;
+	YouFirst.value = false;
 } else {
-if(MyPID.value < PID_in.value){
-MeFirst.value = false;
-YouFirst.value = true;
-} else {
-MeFirst.value = true;
-YouFirst.value = false;
+	if(MyPID.value < PID_in.value){
+		MeFirst.value = false;
+		YouFirst.value = true;
+	} else {
+		MeFirst.value = true;
+		YouFirst.value = false;
+	}
 }
-}
-
 }
   /** ALGORITHM YOUFIRST IN Java*/
 public void alg_YOUFIRST(){

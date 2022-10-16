@@ -267,11 +267,9 @@
           <Connection Source="ME_TCOne.MotoRotate3" Destination="ConControl.SD_5" dx1="461.11108" />
           <Connection Source="Multicast_FCFour.PID_out" Destination="ME_TCOne.Multicast_PID_in" dx1="1777.7777" />
           <Connection Source="Multicast_FCFour.Tstamp_out" Destination="ME_TCOne.Multicast_Tstamp_in" dx1="1816.6666" />
-          <Connection Source="ME_TCOne.Multicast_PID_out" Destination="Multicast_FCFour.PID_in" dx1="55.555553" dx2="127.77777" dy="1577.7777" />
-          <Connection Source="ME_TCOne.Multicast_Tstamp_out" Destination="Multicast_FCFour.Tstamp_in" dx1="27.777777" dx2="61.111107" dy="1411.1111" />
+          <Connection Source="ME_TCOne.Multicast_PID_out" Destination="Multicast_FCFour.PID_in" dx1="55.555553" dx2="127.77777" dy="1355.5555" />
+          <Connection Source="ME_TCOne.Multicast_Tstamp_out" Destination="Multicast_FCFour.Tstamp_in" dx1="27.777777" dx2="61.111107" dy="1177.7777" />
           <Connection Source="PE.RD_6" Destination="ME_TCOne.PE3" dx1="3222.2222" />
-          <Connection Source="PE.RD_9" Destination="Multicast_FCFour.MAIN_PE" dx1="188.88889" />
-          <Connection Source="PE.RD_9" Destination="ME_TCOne.MAIN_PE3" dx1="3322.2222" />
         </DataConnections>
       </FBNetwork>
     </Resource>
