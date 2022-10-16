@@ -112,8 +112,16 @@
         <ECAction Algorithm="YOUFIRST" Output="REPLY" />
         <ECAction Output="CNF" />
       </ECState>
-      <ECState Name="YOUNEXT" x="977.7777" y="1738.8888" >
+      <ECState Name="YOUNEXT" x="1016.6666" y="1677.7777" >
         <ECAction Algorithm="YOUNEXT" Output="REPLY" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="TEMP2" x="227.77777" y="2733.3333" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="TEMP1" x="388.8889" y="2244.4443" >
+        <ECAction Algorithm="STOP" Output="STOP" />
         <ECAction Output="CNF" />
       </ECState>
       <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1838.8888" y="838.88885" />
@@ -127,10 +135,13 @@
       <ECTransition Source="YOUFIRST" Destination="HELD2" Condition="LISTEN" x="1294.4443" y="2944.4443" />
       <ECTransition Source="COMPARE" Destination="YOUFIRST" Condition="!MeFirst&#38;YouFirst" x="2444.4443" y="2266.6665" />
       <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFirst" x="1405.5555" y="2338.889" />
-      <ECTransition Source="HELD1" Destination="YOUNEXT" Condition="REQ&#38;PE&#38;!MAIN_PE" x="1072.2222" y="2083.3333" />
-      <ECTransition Source="YOUNEXT" Destination="START" Condition="1" x="1105.5555" y="1411.1111" />
-      <ECTransition Source="START" Destination="YOUNEXT" Condition="LISTEN" x="1377.7777" y="1488.8888" />
-      <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;!PE&#38;MAIN_PE" x="472.2222" y="1250.0" />
+      <ECTransition Source="HELD1" Destination="YOUNEXT" Condition="REQ&#38;PE&#38;!MAIN_PE" x="1111.1111" y="2022.2222" />
+      <ECTransition Source="YOUNEXT" Destination="START" Condition="1" x="1144.4445" y="1350.0" />
+      <ECTransition Source="START" Destination="YOUNEXT" Condition="LISTEN" x="1416.6666" y="1427.7777" />
+      <ECTransition Source="HELD2" Destination="TEMP2" Condition="REQ&#38;PE" x="461.11108" y="3222.2222" />
+      <ECTransition Source="TEMP2" Destination="START" Condition="REQ&#38;!MAIN_PE" x="227.77777" y="1022.22217" />
+      <ECTransition Source="HELD1" Destination="TEMP1" Condition="REQ&#38;PE" x="683.3333" y="2500.0" />
+      <ECTransition Source="TEMP1" Destination="START" Condition="REQ&#38;!MAIN_PE" x="527.7778" y="1222.2222" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
     <Other Language="Java" Text="System.out.println(&#34;In INT State&#34;);&#10;&#10;MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=MyTstamp.value;&#10;MeFirst.value=false;&#10;YouFirst.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
