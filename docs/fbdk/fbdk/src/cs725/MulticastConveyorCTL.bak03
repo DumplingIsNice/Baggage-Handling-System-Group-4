@@ -142,7 +142,7 @@
     <Other Language="Java" Text="MotoRotate.value=false;&#10;System.out.println(this+&#34; Stop &#34;+MotoRotate.value);&#10;" />
   </Algorithm>
   <Algorithm Name="COMP" >
-    <Other Language="Java" Text="System.out.println(&#34;In COMP State&#34;);&#10;if(MyTstamp.value > Tstamp_in.value){&#10;	MeFirst.value = false;&#10;	YouFirst.value = true;&#10;}else if (MyTstamp.value &#60; Tstamp_in.value){&#10;	MeFirst.value = true;&#10;	YouFirst.value = false;&#10;} else {&#10;	if(MyPID.value &#60; PID_in.value){&#10;		MeFirst.value = false;&#10;		YouFirst.value = true;&#10;	} else {&#10;		MeFirst.value = true;&#10;		YouFirst.value = false;&#10;	}&#10;}&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;In COMP State&#34;);&#10;if(MyTstamp>Tstamp_in){&#10;	if(MyPID&#60;PID_in){&#10;		MeFirst.value = false;&#10;		Youfirst.value = true;&#10;	} else if (MyTstamp&#60;Tstamp_in){&#10;		if(MyPID>=PID_in){&#10;		MeFirst.value = false;&#10;		Youfirst.value = true;&#10;		}&#10;	}else{&#10;		MeFirst.value = true;&#10;		Youfirst.value = false;&#10;	}&#10;}else{&#10;	MeFirst.value = true;&#10;	Youfirst.value = false;&#10;}&#10;" />
   </Algorithm>
   <Algorithm Name="YOUFIRST" >
     <Other Language="Java" Text="System.out.println(&#34;In YOUFIRST State&#34;);&#10;Tstamp_out.value = LampClock.value;&#10;PID_out.value = MyPID.value;&#10;" />

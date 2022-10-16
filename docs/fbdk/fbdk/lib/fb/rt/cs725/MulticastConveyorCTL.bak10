@@ -318,21 +318,7 @@ System.out.println(this+" Stop "+MotoRotate.value);
   /** ALGORITHM COMP IN Java*/
 public void alg_COMP(){
 System.out.println("In COMP State");
-if(MyTstamp.value > Tstamp_in.value){
-	MeFirst.value = false;
-	YouFirst.value = true;
-}else if (MyTstamp.value < Tstamp_in.value){
-	MeFirst.value = true;
-	YouFirst.value = false;
-} else {
-	if(MyPID.value < PID_in.value){
-		MeFirst.value = false;
-		YouFirst.value = true;
-	} else {
-		MeFirst.value = true;
-		YouFirst.value = false;
-	}
-}
+
 }
   /** ALGORITHM YOUFIRST IN Java*/
 public void alg_YOUFIRST(){

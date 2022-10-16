@@ -320,17 +320,17 @@ public void alg_COMP(){
 System.out.println("In COMP State");
 if(MyTstamp.value > Tstamp_in.value){
 	MeFirst.value = false;
-	YouFirst.value = true;
+	Youfirst.value = true;
 }else if (MyTstamp.value < Tstamp_in.value){
 	MeFirst.value = true;
-	YouFirst.value = false;
+	Youfirst.value = false;
 } else {
 	if(MyPID.value < PID_in.value){
 		MeFirst.value = false;
-		YouFirst.value = true;
+		Youfirst.value = true;
 	} else {
 		MeFirst.value = true;
-		YouFirst.value = false;
+		Youfirst.value = false;
 	}
 }
 }
