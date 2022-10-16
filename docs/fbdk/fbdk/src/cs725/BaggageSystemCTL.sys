@@ -201,7 +201,7 @@
         <FB Name="ConControl" Type="PUBL_11" x="7261.111" y="800.0" >
           <Parameter Name="ID" Value="&#34;L5&#34;" />
         </FB>
-        <FB Name="PE" Type="SUBL_11" x="1655.5555" y="3033.3333" >
+        <FB Name="PE" Type="SUBL_11" x="1672.2222" y="3033.3333" >
           <Parameter Name="ID" Value="&#34;PE&#34;" />
         </FB>
         <FB Name="BagInFour" Type="IN_EVENT" x="716.6666" y="2738.8887" >
@@ -259,7 +259,7 @@
           <Connection Source="FCOne.MotoRotate2" Destination="ConControl.SD_7" dx1="1511.1111" />
           <Connection Source="FCTwo.MotoRotate1" Destination="ConControl.SD_8" dx1="1505.5555" />
           <Connection Source="FCTwo.MotoRotate2" Destination="ConControl.SD_9" dx1="1527.7777" />
-          <Connection Source="PE.RD_4" Destination="Multicast_FCFour.PE" dx1="394.44443" />
+          <Connection Source="PE.RD_4" Destination="Multicast_FCFour.PE" dx1="122.22221" />
           <Connection Source="Multicast_FCFour.MotoRotate1" Destination="ConControl.SD_10" dx1="3633.3333" />
           <Connection Source="Multicast_FCFour.MotoRotate2" Destination="ConControl.SD_11" dx1="3705.5554" />
           <Connection Source="ME_TCOne.MotoRotate1" Destination="ConControl.SD_3" dx1="438.8889" />
@@ -270,7 +270,7 @@
           <Connection Source="ME_TCOne.Multicast_PID_out" Destination="Multicast_FCFour.PID_in" dx1="55.555553" dx2="127.77777" dy="1577.7777" />
           <Connection Source="ME_TCOne.Multicast_Tstamp_out" Destination="Multicast_FCFour.Tstamp_in" dx1="27.777777" dx2="61.111107" dy="1411.1111" />
           <Connection Source="PE.RD_6" Destination="ME_TCOne.PE3" dx1="3222.2222" />
-          <Connection Source="PE.RD_9" Destination="Multicast_FCFour.MAIN_PE" dx1="188.88889" />
+          <Connection Source="PE.RD_9" Destination="Multicast_FCFour.MAIN_PE" dx1="61.111107" />
           <Connection Source="PE.RD_9" Destination="ME_TCOne.MAIN_PE3" dx1="3322.2222" />
         </DataConnections>
       </FBNetwork>
