@@ -40,7 +40,7 @@ public class MulticastConveyorCTL extends FBInstance
 /** VAR YouFirst */
   public BOOL YouFirst = new BOOL();
 /** VAR LampClock */
-  public INT LampClock = new INT();
+  public UINT LampClock = new UINT();
 /** Initialization Request */
  public EventServer INIT = new EventInput(this);
 /** Normal Execution Request */
@@ -289,7 +289,7 @@ public MulticastConveyorCTL(){
 public void alg_INIT(){
 MotoRotate.value=true;
 Block.value=false;
-LampClock.value=MyTstamp.value;
+LampClock.value=(int)(MyTstamp.value);
 MeFirst.value=false;
 YouFirst.value=false;
 
@@ -301,10 +301,9 @@ public void alg_REQ(){
 System.out.println("In REQ State");
 
 MeFirst.value = false;
-YouFirst.value = false;
+Youfirst.value = false;
 
 LampClock.value++;
-
 }
   /** ALGORITHM START IN Java*/
 public void alg_START(){
@@ -326,7 +325,6 @@ public void alg_COMP(){
 public void alg_YOUFIRST(){
 Tstamp_out.value = LampClock.value;
 PID_out.value = MyPID.value;
-
 }
   /** ALGORITHM CLOCK IN Java*/
 public void alg_CLOCK(){

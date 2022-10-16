@@ -289,12 +289,13 @@ public MulticastConveyorCTL(){
 public void alg_INIT(){
 MotoRotate.value=true;
 Block.value=false;
-LampClock.value=MyTstamp.value;
+LampClock.value=(int)(MyTstamp.value);
 MeFirst.value=false;
 YouFirst.value=false;
 
 System.out.println(this+" "+MotoRotate.value);
 System.out.println(MotoRotate.value);
+
 }
   /** ALGORITHM REQ IN Java*/
 public void alg_REQ(){

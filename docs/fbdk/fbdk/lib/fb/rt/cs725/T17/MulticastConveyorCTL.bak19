@@ -40,7 +40,7 @@ public class MulticastConveyorCTL extends FBInstance
 /** VAR YouFirst */
   public BOOL YouFirst = new BOOL();
 /** VAR LampClock */
-  public INT LampClock = new INT();
+  public UINT LampClock = new UINT();
 /** Initialization Request */
  public EventServer INIT = new EventInput(this);
 /** Normal Execution Request */
@@ -212,7 +212,7 @@ private void state_COMPARE(){
   eccState = index_COMPARE;
   alg_COMP();
     if(!MeFirst.value&YouFirst.value) state_YOUFIRST();
-    else if(MeFirst.value&!YouFirst.value) state_HELD1();
+    else if(MeFirst.value&!YouFIRST) state_HELD1();
 }
 private static final int index_HELD1 = 7;
 private void state_HELD1(){
@@ -289,19 +289,45 @@ public MulticastConveyorCTL(){
 public void alg_INIT(){
 MotoRotate.value=true;
 Block.value=false;
-LampClock.value=MyTstamp.value;
+LampClock.value=(int)(MyTstamp.value);
 MeFirst.value=false;
-YouFirst.value=false;
+Youfirst=false;
 
 System.out.println(this+" "+MotoRotate.value);
 System.out.println(MotoRotate.value);
+
 }
   /** ALGORITHM REQ IN Java*/
 public void alg_REQ(){
 System.out.println("In REQ State");
 
 MeFirst.value = false;
-YouFirst.value = false;
+Youfirst.value = false;
+
+if(lastPE.value!=PE.value){
+if(!PE.value){
+BlockCon.value=true;
+System.out.println("BlockCon = true");
+}
+else{
+BlockCon.value=false;
+System.out.println("BlockCon = false");
+}
+lastPE.value=PE.value;
+}
+if(lastBlock.value!=Block.value){
+if(Block.value){
+STOP.serviceEvent(this);
+MotoRotate.value=false;
+System.out.println("Cas Stop");
+}
+else{
+START.serviceEvent(this);
+MotoRotate.value=true;
+System.out.println("Cas Start");
+}
+lastBlock.value=Block.value;
+}
 
 LampClock.value++;
 
@@ -320,10 +346,38 @@ System.out.println(this+" Stop "+MotoRotate.value);
 }
   /** ALGORITHM COMP IN Java*/
 public void alg_COMP(){
-
+if(MyTstamp>Tstamp_in){
+//
+if(MyPID<PID_in){
+////
+MeFirst.value = false;
+Youfirst.value = true;
+////
+} else if (MyTstamp<Tstamp_in){
+////
+if(MyPID>=PID_in){
+MeFirst.value = false;
+Youfirst.value = true;
+}
+////
+}else{
+MeFirst.value = true;
+Youfirst.value = false;
+}
+}else{
+////
+MeFirst.value = true;
+Youfirst.value = false;
+////
+}
+//
+}
 }
   /** ALGORITHM YOUFIRST IN Java*/
 public void alg_YOUFIRST(){
+System.out.println("Clock is: " + LampClock.valu);
+System.out.println("ID is: " + MyPID.value);
+
 Tstamp_out.value = LampClock.value;
 PID_out.value = MyPID.value;
 

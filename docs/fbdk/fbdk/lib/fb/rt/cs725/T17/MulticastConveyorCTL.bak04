@@ -39,8 +39,6 @@ public class MulticastConveyorCTL extends FBInstance
   public BOOL MeFirst = new BOOL();
 /** VAR YouFirst */
   public BOOL YouFirst = new BOOL();
-/** VAR LampClock */
-  public INT LampClock = new INT();
 /** Initialization Request */
  public EventServer INIT = new EventInput(this);
 /** Normal Execution Request */
@@ -212,7 +210,7 @@ private void state_COMPARE(){
   eccState = index_COMPARE;
   alg_COMP();
     if(!MeFirst.value&YouFirst.value) state_YOUFIRST();
-    else if(MeFirst.value&!YouFirst.value) state_HELD1();
+    else if(MeFirst.value&!YouFIRST) state_HELD1();
 }
 private static final int index_HELD1 = 7;
 private void state_HELD1(){
@@ -237,9 +235,9 @@ private void state_YOUFIRST(){
   REPLY.serviceEvent(this);
   CNF.serviceEvent(this);
 }
-private static final int index_YOUNEXT = 10;
-private void state_YOUNEXT(){
-  eccState = index_YOUNEXT;
+private static final int index_YouNext = 10;
+private void state_YouNext(){
+  eccState = index_YouNext;
   alg_YOUNEXT();
   REPLY.serviceEvent(this);
   CNF.serviceEvent(this);
@@ -268,7 +266,7 @@ public MulticastConveyorCTL(){
   public void service_REQ(){
     if ((eccState == index_START) && (Candidate.value)) state_REQ();
     else if ((eccState == index_START) && (PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (!PE.value)) state_YOUNEXT();
+    else if ((eccState == index_HELD1) && (!PE.value)) state_YouNext();
     else if ((eccState == index_HELD2) && (!PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
@@ -283,40 +281,59 @@ public MulticastConveyorCTL(){
   public void service_LISTEN(){
     if ((eccState == index_WANTING)) state_COMPARE();
     else if ((eccState == index_YOUFIRST)) state_HELD2();
-    else if ((eccState == index_START)) state_YOUNEXT();
+    else if ((eccState == index_START)) state_YouNext();
   }
-  /** ALGORITHM INIT IN Java*/
+  /** ALGORITHM INIT IN ST*/
 public void alg_INIT(){
 MotoRotate.value=true;
 Block.value=false;
-LampClock.value=MyTstamp.value;
-MeFirst.value=false;
-YouFirst.value=false;
 
 System.out.println(this+" "+MotoRotate.value);
 System.out.println(MotoRotate.value);
 }
-  /** ALGORITHM REQ IN Java*/
+  /** ALGORITHM REQ IN ST*/
 public void alg_REQ(){
-System.out.println("In REQ State");
-
-MeFirst.value = false;
-YouFirst.value = false;
-
-LampClock.value++;
-
+System.out.println(this+" -> Candidate"+Candidate.value);
+if(Candidate.value){
+if(lastPE.value!=PE.value){
+if(!PE.value){
+BlockCon.value=true;
+System.out.println("BlockCon = true");
 }
-  /** ALGORITHM START IN Java*/
+else{
+BlockCon.value=false;
+System.out.println("BlockCon = false");
+}
+lastPE.value=PE.value;
+}
+if(lastBlock.value!=Block.value){
+if(Block.value){
+STOP.serviceEvent(this);
+MotoRotate.value=false;
+System.out.println("Cas Stop");
+}
+else{
+START.serviceEvent(this);
+MotoRotate.value=true;
+System.out.println("Cas Start");
+}
+lastBlock.value=Block.value;
+}
+}
+}
+  /** ALGORITHM START IN ST*/
 public void alg_START(){
 MotoRotate.value=true;
 System.out.println(this+" Start "+MotoRotate.value);
 
+System.out.println("Start "+MotoRotate.value);
 }
-  /** ALGORITHM STOP IN Java*/
+  /** ALGORITHM STOP IN ST*/
 public void alg_STOP(){
 MotoRotate.value=false;
 System.out.println(this+" Stop "+MotoRotate.value);
 
+System.out.println("Stop "+MotoRotate.value);
 }
   /** ALGORITHM COMP IN Java*/
 public void alg_COMP(){
@@ -324,19 +341,14 @@ public void alg_COMP(){
 }
   /** ALGORITHM YOUFIRST IN Java*/
 public void alg_YOUFIRST(){
-Tstamp_out.value = LampClock.value;
-PID_out.value = MyPID.value;
 
 }
   /** ALGORITHM CLOCK IN Java*/
 public void alg_CLOCK(){
-LampClock.value = Tstamp_in.value;
 
 }
   /** ALGORITHM YOUNEXT IN Java*/
 public void alg_YOUNEXT(){
-Tstamp_out.value = LampClock.value;
-PID_out.value = MyPID.value;
 
 }
 }

@@ -72,7 +72,7 @@
       <VarDeclaration Name="lastBlock" Type="BOOL" InitialValue="0" />
       <VarDeclaration Name="MeFirst" Type="BOOL" />
       <VarDeclaration Name="YouFirst" Type="BOOL" />
-      <VarDeclaration Name="LampClock" Type="INT" />
+      <VarDeclaration Name="LampClock" Type="UINT" />
     </InternalVars>
     <ECC >
       <ECState Name="START" Comment="Initial State" x="1988.8888" y="988.88885" >
@@ -111,7 +111,7 @@
         <ECAction Algorithm="YOUFIRST" Output="REPLY" />
         <ECAction Output="CNF" />
       </ECState>
-      <ECState Name="YOUNEXT" x="1016.6666" y="1594.4443" >
+      <ECState Name="YouNext" x="1016.6666" y="1594.4443" >
         <ECAction Algorithm="YOUNEXT" Output="REPLY" />
         <ECAction Output="CNF" />
       </ECState>
@@ -127,29 +127,29 @@
       <ECTransition Source="WANTING" Destination="COMPARE" Condition="LISTEN" x="1988.8888" y="1783.3333" />
       <ECTransition Source="YOUFIRST" Destination="HELD2" Condition="LISTEN" x="1294.4443" y="2944.4443" />
       <ECTransition Source="COMPARE" Destination="YOUFIRST" Condition="!MeFirst&#38;YouFirst" x="2294.4443" y="2288.889" />
-      <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFirst" x="1327.7777" y="2144.4443" />
-      <ECTransition Source="HELD1" Destination="YOUNEXT" Condition="REQ&#38;!PE" x="1016.6666" y="2022.2222" />
+      <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFIRST" x="1327.7777" y="2144.4443" />
+      <ECTransition Source="HELD1" Destination="YouNext" Condition="REQ&#38;!PE" x="1016.6666" y="2022.2222" />
       <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;!PE" x="605.55554" y="1155.5555" />
-      <ECTransition Source="YOUNEXT" Destination="START" Condition="1" x="1144.4445" y="1233.3333" />
-      <ECTransition Source="START" Destination="YOUNEXT" Condition="LISTEN" x="1416.6666" y="1311.1111" />
+      <ECTransition Source="YouNext" Destination="START" Condition="1" x="1144.4445" y="1233.3333" />
+      <ECTransition Source="START" Destination="YouNext" Condition="LISTEN" x="1416.6666" y="1311.1111" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=MyTstamp.value;&#10;MeFirst.value=false;&#10;YouFirst.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
+    <ST Text="MotoRotate := TRUE;&#10;Block := FALSE;&#10;LampClock = MyTstamp;&#10;MeFirst = false;&#10;Youfirst = false;&#10;&#10;System.out.println(this + &#34; &#34; + MotoRotate);&#10;System.out.println(MotoRotate);&#10;" />
   </Algorithm>
   <Algorithm Name="REQ" Comment="Normally executed algorithm" >
-    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;YouFirst.value = false;&#10;&#10;LampClock.value++;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;Youfirst.value = false;&#10;&#10;if(lastPE.value!=PE.value){&#10;if(!PE.value){&#10;BlockCon.value=true;&#10;System.out.println(&#34;BlockCon = true&#34;);&#10;}&#10;else{&#10;BlockCon.value=false;&#10;System.out.println(&#34;BlockCon = false&#34;);&#10;}&#10;lastPE.value=PE.value;&#10;}&#10;if(lastBlock.value!=Block.value){&#10;if(Block.value){&#10;STOP.serviceEvent(this);&#10;MotoRotate.value=false;&#10;System.out.println(&#34;Cas Stop&#34;);&#10;}&#10;else{&#10;START.serviceEvent(this);&#10;MotoRotate.value=true;&#10;System.out.println(&#34;Cas Start&#34;);&#10;}&#10;lastBlock.value=Block.value;&#10;}&#10;&#10;LampClock.value++;&#10;" />
   </Algorithm>
   <Algorithm Name="START" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(this+&#34; Start &#34;+MotoRotate.value);&#10;" />
+    <ST Text="MotoRotate:=TRUE;&#10;System.out.println(this + &#34; Start &#34; + MotoRotate);&#10;" />
   </Algorithm>
   <Algorithm Name="STOP" >
-    <Other Language="Java" Text="MotoRotate.value=false;&#10;System.out.println(this+&#34; Stop &#34;+MotoRotate.value);&#10;" />
+    <ST Text="MotoRotate := FALSE;&#10;System.out.println(this + &#34; Stop &#34; + MotoRotate);&#10;" />
   </Algorithm>
   <Algorithm Name="COMP" >
-    <Other Language="Java" Text="" />
+    <Other Language="Java" Text="if(MyTstamp>Tstamp_in)||(MyPID&#60;PID_in){&#10;MeFirst.value = true;&#10;Youfirst.value = false;&#10;} elseif (MyTstamp&#60;Tstamp_in)||(MyPID>PID_in){&#10;MeFirst.value = false;&#10;Youfirst.value = true;&#10;}&#10;" />
   </Algorithm>
   <Algorithm Name="YOUFIRST" >
-    <Other Language="Java" Text="Tstamp_out.value = LampClock.value;&#10;PID_out.value = MyPID.value;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;Clock is: &#34; + LampClock.valu);&#10;System.out.println(&#34;ID is: &#34; + MyPID.value);&#10;&#10;Tstamp_out.value = LampClock.value;&#10;PID_out.value = MyPID.value;&#10;" />
   </Algorithm>
   <Algorithm Name="CLOCK" >
     <Other Language="Java" Text="LampClock.value = Tstamp_in.value;&#10;" />

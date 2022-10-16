@@ -72,7 +72,7 @@
       <VarDeclaration Name="lastBlock" Type="BOOL" InitialValue="0" />
       <VarDeclaration Name="MeFirst" Type="BOOL" />
       <VarDeclaration Name="YouFirst" Type="BOOL" />
-      <VarDeclaration Name="LampClock" Type="INT" />
+      <VarDeclaration Name="LampClock" Type="UINT" />
     </InternalVars>
     <ECC >
       <ECState Name="START" Comment="Initial State" x="1988.8888" y="988.88885" >
@@ -127,17 +127,17 @@
       <ECTransition Source="WANTING" Destination="COMPARE" Condition="LISTEN" x="1988.8888" y="1783.3333" />
       <ECTransition Source="YOUFIRST" Destination="HELD2" Condition="LISTEN" x="1294.4443" y="2944.4443" />
       <ECTransition Source="COMPARE" Destination="YOUFIRST" Condition="!MeFirst&#38;YouFirst" x="2294.4443" y="2288.889" />
-      <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFirst" x="1327.7777" y="2144.4443" />
+      <ECTransition Source="COMPARE" Destination="HELD1" Condition="MeFirst&#38;!YouFIRST" x="1327.7777" y="2144.4443" />
       <ECTransition Source="HELD1" Destination="YOUNEXT" Condition="REQ&#38;!PE" x="1016.6666" y="2022.2222" />
       <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;!PE" x="605.55554" y="1155.5555" />
       <ECTransition Source="YOUNEXT" Destination="START" Condition="1" x="1144.4445" y="1233.3333" />
       <ECTransition Source="START" Destination="YOUNEXT" Condition="LISTEN" x="1416.6666" y="1311.1111" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=MyTstamp.value;&#10;MeFirst.value=false;&#10;YouFirst.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=(int)(MyTstamp.value);&#10;MeFirst.value=false;&#10;Youfirst=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
   </Algorithm>
   <Algorithm Name="REQ" Comment="Normally executed algorithm" >
-    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;YouFirst.value = false;&#10;&#10;LampClock.value++;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;Youfirst.value = false;&#10;&#10;LampClock.value++;&#10;" />
   </Algorithm>
   <Algorithm Name="START" >
     <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(this+&#34; Start &#34;+MotoRotate.value);&#10;" />
