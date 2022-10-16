@@ -214,7 +214,7 @@
           <Parameter Name="LABEL" Value="&#34;BAG IN 4&#34;" />
         </FB>
         <FB Name="BagIn4" Type="PUBL_0" x="1072.2222" y="2744.4443" />
-        <FB Name="FCFour" Type="TwoConCtl" x="2783.3333" y="3738.8887" >
+        <FB Name="Multicast_FCFour" Type="MulticastTwoConCtl" x="2788.8887" y="3766.6665" >
           <Parameter Name="Candidate" Value="0" />
           <Parameter Name="Block" Value="0" />
         </FB>
@@ -240,12 +240,9 @@
           <Connection Source="BagIn1.CNF" Destination="FCOne.REQ" dx1="1077.7777" />
           <Connection Source="BagIn2.CNF" Destination="FCTwo.REQ" dx1="177.77777" dx2="53.333332" dy="-920.0" />
           <Connection Source="BagInFour.INITO" Destination="BagIn4.INIT" dx1="50.0" dx2="26.666666" dy="-246.66666" />
-          <Connection Source="PE.IND" Destination="FCFour.REQ" dx1="427.77777" dx2="386.66666" dy="-2040.0" />
           <Connection Source="BagInFour.IND" Destination="BagIn4.REQ" dx1="50.0" dx2="33.333332" dy="-360.0" />
-          <Connection Source="BagIn4.CNF" Destination="FCFour.REQ" dx1="777.7778" dx2="126.666664" dy="-3313.3333" />
           <Connection Source="BagIn3.CNF" Destination="FCThree.REQ" dx1="172.22221" dx2="0.0" dy="-220.0" />
           <Connection Source="FCOne.CNF" Destination="ConControl.REQ" dx1="300.0" />
-          <Connection Source="FCFour.CNF" Destination="ConControl.REQ" dx1="361.11108" dx2="153.33333" dy="-2646.6665" />
           <Connection Source="FCTwo.CNF" Destination="ConControl.REQ" dx1="300.0" />
           <Connection Source="BagIn2.INITO" Destination="BagInThree.INIT" dx1="27.777777" dx2="227.77777" dy="-166.66666" />
           <Connection Source="BagIn3.INITO" Destination="BagInFour.INIT" dx1="27.777777" dx2="333.3333" dy="-161.1111" />
@@ -253,9 +250,12 @@
           <Connection Source="PE.INITO" Destination="FCOne.INIT" dx1="88.888885" />
           <Connection Source="PE.INITO" Destination="FCTwo.INIT" dx1="88.888885" />
           <Connection Source="PE.INITO" Destination="FCThree.INIT" dx1="88.888885" />
-          <Connection Source="PE.INITO" Destination="FCFour.INIT" dx1="88.888885" />
-          <Connection Source="FCFour.INITO" Destination="TCOne.INIT" dx1="1749.9999" />
           <Connection Source="FCOne.INITO" Destination="ConControl.INIT" dx1="422.2222" />
+          <Connection Source="PE.IND" Destination="Multicast_FCFour.REQ" dx1="499.99997" />
+          <Connection Source="BagIn4.CNF" Destination="Multicast_FCFour.REQ" dx1="838.88885" />
+          <Connection Source="Multicast_FCFour.CNF" Destination="ConControl.REQ" dx1="1600.0" />
+          <Connection Source="Multicast_FCFour.INITO" Destination="TCOne.INIT" dx1="1688.8888" />
+          <Connection Source="PE.INITO" Destination="Multicast_FCFour.INIT" dx1="311.11108" />
         </EventConnections>
         <DataConnections>
           <Connection Source="TCOne.MotoRotate1" Destination="ConControl.SD_3" dx1="822.22217" />
@@ -267,9 +267,9 @@
           <Connection Source="FCOne.MotoRotate2" Destination="ConControl.SD_7" dx1="1511.1111" />
           <Connection Source="FCTwo.MotoRotate1" Destination="ConControl.SD_8" dx1="1505.5555" />
           <Connection Source="FCTwo.MotoRotate2" Destination="ConControl.SD_9" dx1="1527.7777" />
-          <Connection Source="FCFour.MotoRotate1" Destination="ConControl.SD_10" dx1="1561.1111" dx2="53.333332" dy="586.6666" />
-          <Connection Source="FCFour.MotoRotate2" Destination="ConControl.SD_11" dx1="1583.3333" dx2="53.333332" dy="466.66666" />
-          <Connection Source="PE.RD_4" Destination="FCFour.PE" dx1="111.11111" />
+          <Connection Source="PE.RD_4" Destination="Multicast_FCFour.PE" dx1="394.44443" />
+          <Connection Source="Multicast_FCFour.MotoRotate1" Destination="ConControl.SD_10" dx1="3633.3333" />
+          <Connection Source="Multicast_FCFour.MotoRotate2" Destination="ConControl.SD_11" dx1="3705.5554" />
         </DataConnections>
       </FBNetwork>
     </Resource>
