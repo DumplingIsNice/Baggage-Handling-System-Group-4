@@ -295,7 +295,6 @@ YouFirst.value=false;
 
 System.out.println(this+" "+MotoRotate.value);
 System.out.println(MotoRotate.value);
-
 }
   /** ALGORITHM REQ IN Java*/
 public void alg_REQ(){

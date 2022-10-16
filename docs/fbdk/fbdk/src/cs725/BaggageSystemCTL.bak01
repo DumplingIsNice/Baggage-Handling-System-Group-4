@@ -217,6 +217,7 @@
         <FB Name="FCFour" Type="TwoConCtl" x="2783.3333" y="3738.8887" >
           <Parameter Name="Candidate" Value="0" />
           <Parameter Name="Block" Value="0" />
+          <Parameter Name="PE" Value="0" />
         </FB>
         <EventConnections>
           <Connection Source="START.COLD" Destination="BagInOne.INIT" dx1="311.11108" dx2="20.0" dy="-60.0" />
@@ -269,7 +270,6 @@
           <Connection Source="FCTwo.MotoRotate2" Destination="ConControl.SD_9" dx1="1527.7777" />
           <Connection Source="FCFour.MotoRotate1" Destination="ConControl.SD_10" dx1="1561.1111" dx2="53.333332" dy="586.6666" />
           <Connection Source="FCFour.MotoRotate2" Destination="ConControl.SD_11" dx1="1583.3333" dx2="53.333332" dy="466.66666" />
-          <Connection Source="PE.RD_4" Destination="FCFour.PE" dx1="111.11111" />
         </DataConnections>
       </FBNetwork>
     </Resource>
