@@ -274,7 +274,7 @@ public MulticastConveyorCTL(){
   public void service_REQ(){
     if ((eccState == index_START) && (!PE.value)) state_WANTING();
     else if ((eccState == index_HELD1) && (PE.value&!MAIN_PE.value)) state_YOUNEXT();
-    else if ((eccState == index_HELD2) && (PE.value&!MAIN_PE.value)) state_START();
+    else if ((eccState == index_HELD2) && (!PE.value&MAIN_PE.value)) state_START();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){

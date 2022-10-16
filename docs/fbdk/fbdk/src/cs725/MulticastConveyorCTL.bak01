@@ -130,7 +130,7 @@
       <ECTransition Source="HELD1" Destination="YOUNEXT" Condition="REQ&#38;PE&#38;!MAIN_PE" x="1072.2222" y="2083.3333" />
       <ECTransition Source="YOUNEXT" Destination="START" Condition="1" x="1105.5555" y="1411.1111" />
       <ECTransition Source="START" Destination="YOUNEXT" Condition="LISTEN" x="1377.7777" y="1488.8888" />
-      <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;PE&#38;!MAIN_PE" x="416.66666" y="1316.6666" />
+      <ECTransition Source="HELD2" Destination="START" Condition="REQ&#38;!PE&#38;MAIN_PE" x="472.2222" y="1250.0" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
     <Other Language="Java" Text="System.out.println(&#34;In INT State&#34;);&#10;&#10;MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=MyTstamp.value;&#10;MeFirst.value=false;&#10;YouFirst.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
