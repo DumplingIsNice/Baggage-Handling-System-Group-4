@@ -33,14 +33,13 @@ This section acts as landing page for the team during development & design.
 
 ### To Dos
 
-- **Get the conveyors moving by wiring some connections**.
 - **Note down which Photo Eye (PE) connects to which conveyor**, and this in turn connects to which function blocks.
-- Decided on **generalization vs specific** implementation & mention in report
 
 ### Tips
 
 - **Baggage Handling System is already built** we implement **mutual exclusion in the critical sections**. This implementation of mutual exclusion will require you to use the same **basic function blocks** and **add more events and data variables** to it, or **add one or two additional function blocks to the existing system**.
 - You can add **multiple actions to a single state**. You can also have **actions without algorithms**, or **actions without events**.
+- PEs are active low.
   
 ### What is this?
 
@@ -51,6 +50,14 @@ Implementing a baggage handling system (BHS) by high-level abstraction with func
 - Central Server (CS1) by Andre
 - Ring Token (CS1) by Darpan
 - Multicast (CS1) by Hao
+
+### Assumptions Made:
+Assumptions:
+
+- Conveyer 9 may always run (always depletes baggage at exit). Cascading start/stops is intiated from conveyer 8.
+- All baggage must be distanced sufficiently apart to toggle photo eye ONCE per entry-exit event  AND is no shorter than the distance required from a bag to travel from one PE to another PE (Approx. 3/5 of a conveyer belt length).
+- Self-loops on ECC states are implied.
+- REQ is the master "clock". Wired to PE.
 
 ### Instructions
 
