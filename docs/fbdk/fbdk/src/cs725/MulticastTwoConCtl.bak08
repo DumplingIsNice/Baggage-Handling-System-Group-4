@@ -72,6 +72,9 @@
       <Parameter Name="MyPID" Value="10" />
       <Parameter Name="MyTstamp" Value="0" />
     </FB>
+    <FB Name="STOP_DELAY" Type="E_DELAY" x="4361.111" y="205.55554" >
+      <Parameter Name="DT" Value="t#1000s" />
+    </FB>
     <FB Name="START_DELAY" Type="E_DELAY" x="4355.555" y="966.6666" >
       <Parameter Name="DT" Value="t#1000ms" />
     </FB>
@@ -87,8 +90,9 @@
       <Connection Source="STOP" Destination="MulticastConveyorCTL_FC12.CAS_START" dx1="2527.7776" />
       <Connection Source="REQ" Destination="MulticastConveyorCTL_FC12.REQ" dx1="2538.8887" />
       <Connection Source="MulticastConveyorCTL_FC12.START" Destination="START_DELAY.START" dx1="761.1111" />
+      <Connection Source="MulticastConveyorCTL_FC12.STOP" Destination="STOP_DELAY.START" dx1="761.1111" />
+      <Connection Source="STOP_DELAY.EO" Destination="FC11.CAS_STOP" dx1="88.888885" dx2="249.99998" dy="-222.22221" />
       <Connection Source="START_DELAY.EO" Destination="FC11.CAS_START" dx1="72.22222" dx2="138.88889" dy="1183.3333" />
-      <Connection Source="MulticastConveyorCTL_FC12.STOP" Destination="FC11.CAS_STOP" dx1="266.66666" dx2="222.22221" dy="-400.0" />
     </EventConnections>
     <DataConnections>
       <Connection Source="FC11.MotoRotate" Destination="MotoRotate1" dx1="1566.6666" />

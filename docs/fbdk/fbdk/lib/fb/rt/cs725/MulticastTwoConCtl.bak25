@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK MulticastTwoConCtl
   * @author JHC
-  * @version 20221017/JHC
+  * @version 20221016/JHC
   */
 public class MulticastTwoConCtl extends FBInstance
 {
@@ -154,6 +154,8 @@ public class MulticastTwoConCtl extends FBInstance
   protected ConveyorCTL FC11 = new ConveyorCTL() ;
 /** FB MulticastConveyorCTL_FC12 */
   protected MulticastConveyorCTL MulticastConveyorCTL_FC12 = new MulticastConveyorCTL() ;
+/** FB STOP_DELAY */
+  protected E_DELAY STOP_DELAY = new E_DELAY() ;
 /** FB START_DELAY */
   protected E_DELAY START_DELAY = new E_DELAY() ;
 /** The default constructor. */
@@ -170,8 +172,9 @@ public MulticastTwoConCtl(){
     STOP.connectTo(MulticastConveyorCTL_FC12.CAS_START);
     REQ.connectTo(MulticastConveyorCTL_FC12.REQ);
     MulticastConveyorCTL_FC12.START.connectTo(START_DELAY.START);
+    MulticastConveyorCTL_FC12.STOP.connectTo(STOP_DELAY.START);
+    STOP_DELAY.EO.connectTo(FC11.CAS_STOP);
     START_DELAY.EO.connectTo(FC11.CAS_START);
-    MulticastConveyorCTL_FC12.STOP.connectTo(FC11.CAS_STOP);
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
     MulticastConveyorCTL_FC12.connectIVNoException("PE",PE);
     MulticastConveyorCTL_FC12.connectIVNoException("PID_in",PID_in);
@@ -185,6 +188,7 @@ public MulticastTwoConCtl(){
     FC11.Candidate.initializeNoException("0");
     MulticastConveyorCTL_FC12.MyPID.initializeNoException("10");
     MulticastConveyorCTL_FC12.MyTstamp.initializeNoException("0");
+    STOP_DELAY.DT.initializeNoException("t#1000s");
     START_DELAY.DT.initializeNoException("t#1000ms");
   }
 /** {@inheritDoc}
@@ -196,18 +200,21 @@ public MulticastTwoConCtl(){
     super.initialize(fbName,r);
     FC11.initialize("FC11",r);
     MulticastConveyorCTL_FC12.initialize("MulticastConveyorCTL_FC12",r);
+    STOP_DELAY.initialize("STOP_DELAY",r);
     START_DELAY.initialize("START_DELAY",r);
 }
 /** Start the FB instances. */
 public void start( ){
   FC11.start();
   MulticastConveyorCTL_FC12.start();
+  STOP_DELAY.start();
   START_DELAY.start();
 }
 /** Stop the FB instances. */
 public void stop( ){
   FC11.stop();
   MulticastConveyorCTL_FC12.stop();
+  STOP_DELAY.stop();
   START_DELAY.stop();
 }
 }
