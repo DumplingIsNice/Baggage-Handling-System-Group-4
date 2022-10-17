@@ -3,11 +3,11 @@ package fb.rt.cs725;
 import fb.datatype.*;
 import fb.rt.*;
 import fb.rt.events.*;
-/** FUNCTION_BLOCK TwoConCtl
+/** FUNCTION_BLOCK MulticastTwoConCtl
   * @author JHC
   * @version 20221016/JHC
   */
-public class TwoConCtl extends FBInstance
+public class MulticastTwoConCtl extends FBInstance
 {
 /** VAR Candidate */
   public BOOL Candidate = new BOOL();
@@ -111,7 +111,7 @@ public class TwoConCtl extends FBInstance
 /** FB FC12 */
   protected ConveyorCTL FC12 = new ConveyorCTL() ;
 /** The default constructor. */
-public TwoConCtl(){
+public MulticastTwoConCtl(){
     super();
     INIT.connectTo(FC11.INIT);
     REQ.connectTo(FC11.REQ);

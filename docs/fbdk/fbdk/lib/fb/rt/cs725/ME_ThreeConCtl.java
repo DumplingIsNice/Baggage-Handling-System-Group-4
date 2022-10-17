@@ -1,0 +1,250 @@
+/* Copyright (c)2022 Rockwell Automation. All rights reserved. */
+package fb.rt.cs725;
+import fb.datatype.*;
+import fb.rt.*;
+import fb.rt.events.*;
+/** FUNCTION_BLOCK ME_ThreeConCtl
+  * @author JHC
+  * @version 20221017/JHC
+  */
+public class ME_ThreeConCtl extends FBInstance
+{
+/** VAR Candidate */
+  public BOOL Candidate = new BOOL();
+/** VAR Block */
+  public BOOL Block = new BOOL();
+/** VAR PE1 */
+  public BOOL PE1 = new BOOL();
+/** VAR PE2 */
+  public BOOL PE2 = new BOOL();
+/** VAR PE3 */
+  public BOOL PE3 = new BOOL();
+/** VAR Multicast_PID_in */
+  public INT Multicast_PID_in = new INT();
+/** VAR Multicast_Tstamp_in */
+  public INT Multicast_Tstamp_in = new INT();
+/** VAR MAIN_PE3 */
+  public BOOL MAIN_PE3 = new BOOL();
+/** VAR MotoRotate1 */
+  public BOOL MotoRotate1 = new BOOL();
+/** VAR MotoRotate2 */
+  public BOOL MotoRotate2 = new BOOL();
+/** VAR MotoRotate3 */
+  public BOOL MotoRotate3 = new BOOL();
+/** VAR BlockCon */
+  public BOOL BlockCon = new BOOL();
+/** VAR Multicast_PID_out */
+  public INT Multicast_PID_out = new INT();
+/** VAR Multicast_Tstamp_out */
+  public INT Multicast_Tstamp_out = new INT();
+/** Initialization Request */
+ public EventOutput INIT = new EventOutput();
+/** Normal Execution Request */
+ public EventOutput REQ = new EventOutput();
+/** EVENT MULTI_LISTEN */
+ public EventOutput MULTI_LISTEN = new EventOutput();
+/** Initialization Confirm */
+ public EventOutput INITO = new EventOutput();
+/** Execution Confirmation */
+ public EventOutput CNF = new EventOutput();
+/** EVENT START */
+ public EventOutput START = new EventOutput();
+/** EVENT STOP */
+ public EventOutput STOP = new EventOutput();
+/** EVENT MULTI_REPLY */
+ public EventOutput MULTI_REPLY = new EventOutput();
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventServer eiNamed(String s){
+    if("INIT".equals(s)) return INIT;
+    if("REQ".equals(s)) return REQ;
+    if("MULTI_LISTEN".equals(s)) return MULTI_LISTEN;
+    return super.eiNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventOutput eoNamed(String s){
+    if("INITO".equals(s)) return INITO;
+    if("CNF".equals(s)) return CNF;
+    if("START".equals(s)) return START;
+    if("STOP".equals(s)) return STOP;
+    if("MULTI_REPLY".equals(s)) return MULTI_REPLY;
+    return super.eoNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc}
+*/
+  public ANY ivNamed(String s) throws FBRManagementException{
+    if("Candidate".equals(s)) return Candidate;
+    if("Block".equals(s)) return Block;
+    if("PE1".equals(s)) return PE1;
+    if("PE2".equals(s)) return PE2;
+    if("PE3".equals(s)) return PE3;
+    if("Multicast_PID_in".equals(s)) return Multicast_PID_in;
+    if("Multicast_Tstamp_in".equals(s)) return Multicast_Tstamp_in;
+    if("MAIN_PE3".equals(s)) return MAIN_PE3;
+    return super.ivNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc}
+*/
+  public ANY ovNamed(String s) throws FBRManagementException{
+    if("MotoRotate1".equals(s)) return MotoRotate1;
+    if("MotoRotate2".equals(s)) return MotoRotate2;
+    if("MotoRotate3".equals(s)) return MotoRotate3;
+    if("BlockCon".equals(s)) return BlockCon;
+    if("Multicast_PID_out".equals(s)) return Multicast_PID_out;
+    if("Multicast_Tstamp_out".equals(s)) return Multicast_Tstamp_out;
+    return super.ovNamed(s);}
+/** {@inheritDoc}
+* @param ivName {@inheritDoc}
+* @param newIV {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc} */
+  public void connectIV(String ivName, ANY newIV)
+    throws FBRManagementException{
+    if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
+    else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
+    else if("PE1".equals(ivName)) connect_PE1((BOOL)newIV);
+    else if("PE2".equals(ivName)) connect_PE2((BOOL)newIV);
+    else if("PE3".equals(ivName)) connect_PE3((BOOL)newIV);
+    else if("Multicast_PID_in".equals(ivName)) connect_Multicast_PID_in((INT)newIV);
+    else if("Multicast_Tstamp_in".equals(ivName)) connect_Multicast_Tstamp_in((INT)newIV);
+    else if("MAIN_PE3".equals(ivName)) connect_MAIN_PE3((BOOL)newIV);
+    else super.connectIV(ivName, newIV);
+    }
+/** Connect the given variable to the input variable Candidate
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_Candidate(BOOL newIV) throws FBRManagementException{
+    Candidate = newIV;
+    FC11.connectIVNoException("Candidate",Candidate);
+    }
+/** Connect the given variable to the input variable Block
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_Block(BOOL newIV) throws FBRManagementException{
+    Block = newIV;
+    FC11.connectIVNoException("Block",Block);
+    }
+/** Connect the given variable to the input variable PE1
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_PE1(BOOL newIV) throws FBRManagementException{
+    PE1 = newIV;
+    FC11.connectIVNoException("PE",PE1);
+    }
+/** Connect the given variable to the input variable PE2
+  * @param newIV The variable to connect
+ */
+  public void connect_PE2(BOOL newIV){
+    PE2 = newIV;
+    }
+/** Connect the given variable to the input variable PE3
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_PE3(BOOL newIV) throws FBRManagementException{
+    PE3 = newIV;
+    Multicast_FC12.connectIVNoException("PE",PE3);
+    }
+/** Connect the given variable to the input variable Multicast_PID_in
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_Multicast_PID_in(INT newIV) throws FBRManagementException{
+    Multicast_PID_in = newIV;
+    Multicast_FC12.connectIVNoException("PID_in",Multicast_PID_in);
+    }
+/** Connect the given variable to the input variable Multicast_Tstamp_in
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_Multicast_Tstamp_in(INT newIV) throws FBRManagementException{
+    Multicast_Tstamp_in = newIV;
+    Multicast_FC12.connectIVNoException("Tstamp_in",Multicast_Tstamp_in);
+    }
+/** Connect the given variable to the input variable MAIN_PE3
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_MAIN_PE3(BOOL newIV) throws FBRManagementException{
+    MAIN_PE3 = newIV;
+    Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
+    }
+/** FB FC11 */
+  protected ConveyorCTL FC11 = new ConveyorCTL() ;
+/** FB FC13 */
+  protected ConveyorCTL FC13 = new ConveyorCTL() ;
+/** FB Multicast_FC12 */
+  protected MulticastConveyorCTL Multicast_FC12 = new MulticastConveyorCTL() ;
+/** The default constructor. */
+public ME_ThreeConCtl(){
+    super();
+    INIT.connectTo(FC11.INIT);
+    REQ.connectTo(FC11.REQ);
+    FC13.INITO.connectTo(INITO);
+    FC13.CNF.connectTo(CNF);
+    FC11.STOP.connectTo(STOP);
+    FC11.START.connectTo(START);
+    REQ.connectTo(FC13.REQ);
+    FC11.CNF.connectTo(CNF);
+    MULTI_LISTEN.connectTo(Multicast_FC12.LISTEN);
+    Multicast_FC12.REPLY.connectTo(MULTI_REPLY);
+    REQ.connectTo(Multicast_FC12.REQ);
+    Multicast_FC12.CNF.connectTo(CNF);
+    FC11.INITO.connectTo(Multicast_FC12.INIT);
+    Multicast_FC12.INITO.connectTo(FC13.INIT);
+    MotoRotate3 = (BOOL)FC13.ovNamedNoException("MotoRotate");
+    MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
+    FC11.connectIVNoException("PE",PE1);
+    FC11.connectIVNoException("Block",Block);
+    BlockCon = (BOOL)FC11.ovNamedNoException("BlockCon");
+    FC11.connectIVNoException("Candidate",Candidate);
+    MotoRotate2 = (BOOL)Multicast_FC12.ovNamedNoException("MotoRotate");
+    Multicast_FC12.connectIVNoException("PID_in",Multicast_PID_in);
+    Multicast_FC12.connectIVNoException("Tstamp_in",Multicast_Tstamp_in);
+    Multicast_Tstamp_out = (INT)Multicast_FC12.ovNamedNoException("Tstamp_out");
+    Multicast_PID_out = (INT)Multicast_FC12.ovNamedNoException("PID_out");
+    Multicast_FC12.connectIVNoException("PE",PE3);
+    Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
+    FC13.PE.initializeNoException("0");
+    FC13.Block.initializeNoException("0");
+    FC13.Candidate.initializeNoException("0");
+    Multicast_FC12.Candidate.initializeNoException("0");
+    Multicast_FC12.Block.initializeNoException("0");
+    Multicast_FC12.MyPID.initializeNoException("20");
+    Multicast_FC12.MyTstamp.initializeNoException("0");
+    Multicast_FC12.MyLoadDelay.initializeNoException("5");
+  }
+/** {@inheritDoc}
+ * @param fbName {@inheritDoc}
+ * @param r {@inheritDoc}
+ * @throws FBRManagementException {@inheritDoc} */
+  public void initialize(String fbName, Resource r)
+  throws FBRManagementException{
+    super.initialize(fbName,r);
+    FC11.initialize("FC11",r);
+    FC13.initialize("FC13",r);
+    Multicast_FC12.initialize("Multicast_FC12",r);
+}
+/** Start the FB instances. */
+public void start( ){
+  FC11.start();
+  FC13.start();
+  Multicast_FC12.start();
+}
+/** Stop the FB instances. */
+public void stop( ){
+  FC11.stop();
+  FC13.stop();
+  Multicast_FC12.stop();
+}
+}

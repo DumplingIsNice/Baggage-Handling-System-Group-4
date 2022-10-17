@@ -3,11 +3,11 @@ package fb.rt.cs725;
 import fb.datatype.*;
 import fb.rt.*;
 import fb.rt.events.*;
-/** FUNCTION_BLOCK TwoConCtl
+/** FUNCTION_BLOCK MulticastTwoConCtl
   * @author JHC
   * @version 20221016/JHC
   */
-public class TwoConCtl extends FBInstance
+public class MulticastTwoConCtl extends FBInstance
 {
 /** VAR Candidate */
   public BOOL Candidate = new BOOL();
@@ -15,12 +15,20 @@ public class TwoConCtl extends FBInstance
   public BOOL Block = new BOOL();
 /** VAR PE */
   public BOOL PE = new BOOL();
+/** VAR PID_in */
+  public INT PID_in = new INT();
+/** VAR Tstamp_in */
+  public INT Tstamp_in = new INT();
 /** VAR MotoRotate1 */
   public BOOL MotoRotate1 = new BOOL();
 /** VAR MotoRotate2 */
   public BOOL MotoRotate2 = new BOOL();
 /** VAR BlockCon */
   public BOOL BlockCon = new BOOL();
+/** VAR PID_out */
+  public INT PID_out = new INT();
+/** VAR Tstamp_out */
+  public INT Tstamp_out = new INT();
 /** Initialization Request */
  public EventOutput INIT = new EventOutput();
 /** Normal Execution Request */
@@ -29,10 +37,14 @@ public class TwoConCtl extends FBInstance
  public EventOutput START = new EventOutput();
 /** EVENT STOP */
  public EventOutput STOP = new EventOutput();
+/** EVENT LISTEN */
+ public EventOutput LISTEN = new EventOutput();
 /** Initialization Confirm */
  public EventOutput INITO = new EventOutput();
 /** Execution Confirmation */
  public EventOutput CNF = new EventOutput();
+/** EVENT REPLY */
+ public EventOutput REPLY = new EventOutput();
 /** {@inheritDoc}
 * @param s {@inheritDoc}
 * @return {@inheritDoc}
@@ -42,6 +54,7 @@ public class TwoConCtl extends FBInstance
     if("REQ".equals(s)) return REQ;
     if("START".equals(s)) return START;
     if("STOP".equals(s)) return STOP;
+    if("LISTEN".equals(s)) return LISTEN;
     return super.eiNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -50,6 +63,7 @@ public class TwoConCtl extends FBInstance
   public EventOutput eoNamed(String s){
     if("INITO".equals(s)) return INITO;
     if("CNF".equals(s)) return CNF;
+    if("REPLY".equals(s)) return REPLY;
     return super.eoNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -60,6 +74,8 @@ public class TwoConCtl extends FBInstance
     if("Candidate".equals(s)) return Candidate;
     if("Block".equals(s)) return Block;
     if("PE".equals(s)) return PE;
+    if("PID_in".equals(s)) return PID_in;
+    if("Tstamp_in".equals(s)) return Tstamp_in;
     return super.ivNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -70,6 +86,8 @@ public class TwoConCtl extends FBInstance
     if("MotoRotate1".equals(s)) return MotoRotate1;
     if("MotoRotate2".equals(s)) return MotoRotate2;
     if("BlockCon".equals(s)) return BlockCon;
+    if("PID_out".equals(s)) return PID_out;
+    if("Tstamp_out".equals(s)) return Tstamp_out;
     return super.ovNamed(s);}
 /** {@inheritDoc}
 * @param ivName {@inheritDoc}
@@ -80,23 +98,21 @@ public class TwoConCtl extends FBInstance
     if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
     else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
     else if("PE".equals(ivName)) connect_PE((BOOL)newIV);
+    else if("PID_in".equals(ivName)) connect_PID_in((INT)newIV);
+    else if("Tstamp_in".equals(ivName)) connect_Tstamp_in((INT)newIV);
     else super.connectIV(ivName, newIV);
     }
 /** Connect the given variable to the input variable Candidate
   * @param newIV The variable to connect
-  * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_Candidate(BOOL newIV) throws FBRManagementException{
+  public void connect_Candidate(BOOL newIV){
     Candidate = newIV;
-    FC12.connectIVNoException("Candidate",Candidate);
     }
 /** Connect the given variable to the input variable Block
   * @param newIV The variable to connect
-  * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_Block(BOOL newIV) throws FBRManagementException{
+  public void connect_Block(BOOL newIV){
     Block = newIV;
-    FC12.connectIVNoException("Block",Block);
     }
 /** Connect the given variable to the input variable PE
   * @param newIV The variable to connect
@@ -104,34 +120,63 @@ public class TwoConCtl extends FBInstance
  */
   public void connect_PE(BOOL newIV) throws FBRManagementException{
     PE = newIV;
-    FC12.connectIVNoException("PE",PE);
+    MulticastConveyorCTL_FC12.connectIVNoException("PE",PE);
+    }
+/** Connect the given variable to the input variable PID_in
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_PID_in(INT newIV) throws FBRManagementException{
+    PID_in = newIV;
+    MulticastConveyorCTL_FC12.connectIVNoException("PID_in",PID_in);
+    }
+/** Connect the given variable to the input variable Tstamp_in
+  * @param newIV The variable to connect
+  * @throws FBRManagementException An internal connection failed.
+ */
+  public void connect_Tstamp_in(INT newIV) throws FBRManagementException{
+    Tstamp_in = newIV;
+    MulticastConveyorCTL_FC12.connectIVNoException("Tstamp_in",Tstamp_in);
     }
 /** FB FC11 */
   protected ConveyorCTL FC11 = new ConveyorCTL() ;
-/** FB FC12 */
-  protected ConveyorCTL FC12 = new ConveyorCTL() ;
+/** FB MulticastConveyorCTL_FC12 */
+  protected MulticastConveyorCTL MulticastConveyorCTL_FC12 = new MulticastConveyorCTL() ;
+/** FB STOP_DELAY */
+  protected E_DELAY STOP_DELAY = new E_DELAY() ;
+/** FB START_DELAY */
+  protected E_DELAY START_DELAY = new E_DELAY() ;
 /** The default constructor. */
-public TwoConCtl(){
+public MulticastTwoConCtl(){
     super();
     INIT.connectTo(FC11.INIT);
     REQ.connectTo(FC11.REQ);
-    FC12.INITO.connectTo(INITO);
-    FC12.CNF.connectTo(CNF);
-    REQ.connectTo(FC12.REQ);
-    STOP.connectTo(FC12.CAS_STOP);
-    START.connectTo(FC12.CAS_START);
-    FC12.STOP.connectTo(FC11.CAS_STOP);
-    FC12.START.connectTo(FC11.CAS_START);
-    FC11.INITO.connectTo(FC12.INIT);
-    FC12.connectIVNoException("Block",Block);
-    FC12.connectIVNoException("Candidate",Candidate);
-    FC12.connectIVNoException("PE",PE);
-    BlockCon = (BOOL)FC12.ovNamedNoException("BlockCon");
+    LISTEN.connectTo(MulticastConveyorCTL_FC12.LISTEN);
+    MulticastConveyorCTL_FC12.REPLY.connectTo(REPLY);
+    FC11.INITO.connectTo(MulticastConveyorCTL_FC12.INIT);
+    MulticastConveyorCTL_FC12.CNF.connectTo(CNF);
+    MulticastConveyorCTL_FC12.INITO.connectTo(INITO);
+    START.connectTo(MulticastConveyorCTL_FC12.CAS_STOP);
+    STOP.connectTo(MulticastConveyorCTL_FC12.CAS_START);
+    REQ.connectTo(MulticastConveyorCTL_FC12.REQ);
+    MulticastConveyorCTL_FC12.START.connectTo(START_DELAY.START);
+    MulticastConveyorCTL_FC12.STOP.connectTo(STOP_DELAY.START);
+    STOP_DELAY.EO.connectTo(FC11.CAS_STOP);
+    START_DELAY.EO.connectTo(FC11.CAS_START);
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
-    MotoRotate2 = (BOOL)FC12.ovNamedNoException("MotoRotate");
+    MulticastConveyorCTL_FC12.connectIVNoException("PE",PE);
+    MulticastConveyorCTL_FC12.connectIVNoException("PID_in",PID_in);
+    MulticastConveyorCTL_FC12.connectIVNoException("Tstamp_in",Tstamp_in);
+    Tstamp_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("Tstamp_out");
+    PID_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("PID_out");
+    MotoRotate2 = (BOOL)MulticastConveyorCTL_FC12.ovNamedNoException("MotoRotate");
     FC11.PE.initializeNoException("0");
     FC11.Block.initializeNoException("0");
     FC11.Candidate.initializeNoException("0");
+    MulticastConveyorCTL_FC12.MyPID.initializeNoException("10");
+    MulticastConveyorCTL_FC12.MyTstamp.initializeNoException("0");
+    STOP_DELAY.DT.initializeNoException("t#1000s");
+    START_DELAY.DT.initializeNoException("t#1000ms");
   }
 /** {@inheritDoc}
  * @param fbName {@inheritDoc}
@@ -141,16 +186,22 @@ public TwoConCtl(){
   throws FBRManagementException{
     super.initialize(fbName,r);
     FC11.initialize("FC11",r);
-    FC12.initialize("FC12",r);
+    MulticastConveyorCTL_FC12.initialize("MulticastConveyorCTL_FC12",r);
+    STOP_DELAY.initialize("STOP_DELAY",r);
+    START_DELAY.initialize("START_DELAY",r);
 }
 /** Start the FB instances. */
 public void start( ){
   FC11.start();
-  FC12.start();
+  MulticastConveyorCTL_FC12.start();
+  STOP_DELAY.start();
+  START_DELAY.start();
 }
 /** Stop the FB instances. */
 public void stop( ){
   FC11.stop();
-  FC12.stop();
+  MulticastConveyorCTL_FC12.stop();
+  STOP_DELAY.stop();
+  START_DELAY.stop();
 }
 }
