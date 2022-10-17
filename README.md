@@ -138,20 +138,35 @@ Function blocks that control the system make changes here).
 - **PE SUBL** block provides the PE input to the controller (*PE numbers is the same as the associated conveyer*):
 - **ConControl PUBL** block is used to control the conveyor belts on/off and the Conveyor (Publish the motor rotate values to the conveyor models):
 
-| **PE SUBL** |             | **ConControl   PUBL** |              |
-|-------------|-------------|-----------------------|--------------|
-|  RD_1       |  PE 2       |  SD_1                 |  Conveyor 5  |
-|  RD_2       |  PE 4       |  SD_2                 |  Conveyor 6  |
-|  RD_3       |  PE 6       |  SD_3                 |  Conveyor 7  |
-|  RD_4       |  PE 11      |  SD_4                 |  Conveyor 8  |
-|  RD_5       |  PE 7       |  SD_5                 |  Conveyor 9  |
-|  RD_6       |  PE 8       |  SD_6                 |  Conveyor 1  |
-|  RD_7       |  PE 12      |  SD_7                 |  Conveyor 2  |
-|  RD_8       |  PE 13      |  SD_8                 |  Conveyor 3  |
-|  RD_9       |  PE 14      |  SD_9                 |  Conveyor 4  |
-|  RD_10      |  Future Use |  SD_10                |  Conveyor 10 |
-|  RD_11      |  Future Use |  SD_11                |  Conveyor 11 |
-|  RD_11      |  Future Use |  SD_11                |  Conveyor 11 |
+| PE SUBL |            |
+|:-------:|:----------:|
+| RD_1    | PE 2       |
+| RD_2    | PE 4       |
+| RD_3    | PE 6       |
+| RD_4    | PE 11      |
+| RD_5    | PE 7       |
+| RD_6    | PE 8       |
+| RD_7    | PE 12      |
+| RD_8    | PE 13      |
+| RD_9    | PE 14      |
+| RD_10   | Future Use |
+| RD_11   | Future Use |
+| RD_11   | Future Use |
+
+| ConControl PUBL |             |
+|:---------------:|:-----------:|
+| SD_1            | Conveyor 5  |
+| SD_2            | Conveyor 6  |
+| SD_3            | Conveyor 7  |
+| SD_4            | Conveyor 8  |
+| SD_5            | Conveyor 9  |
+| SD_6            | Conveyor 1  |
+| SD_7            | Conveyor 2  |
+| SD_8            | Conveyor 3  |
+| SD_9            | Conveyor 4  |
+| SD_10           | Conveyor 10 |
+| SD_11           | Conveyor 11 |
+| SD_11           | Conveyor 11 |
 
 - **Event Variables:**
 	- **Event Inputs:**
