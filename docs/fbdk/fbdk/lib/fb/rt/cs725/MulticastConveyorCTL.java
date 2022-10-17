@@ -19,6 +19,8 @@ public class MulticastConveyorCTL extends FBInstance
   public INT MyPID = new INT();
 /** VAR MyTstamp */
   public INT MyTstamp = new INT();
+/** VAR MyLoadDelay */
+  public INT MyLoadDelay = new INT();
 /** VAR PID_in */
   public INT PID_in = new INT();
 /** VAR Tstamp_in */
@@ -43,6 +45,10 @@ public class MulticastConveyorCTL extends FBInstance
   public BOOL YouFirst = new BOOL();
 /** VAR LampClock */
   public INT LampClock = new INT();
+/** VAR DelayCounter */
+  public INT DelayCounter = new INT();
+/** VAR DelayElapse */
+  public BOOL DelayElapse = new BOOL();
 /** Initialization Request */
  public EventServer INIT = new EventInput(this);
 /** Normal Execution Request */
@@ -96,6 +102,7 @@ public class MulticastConveyorCTL extends FBInstance
     if("Candidate".equals(s)) return Candidate;
     if("MyPID".equals(s)) return MyPID;
     if("MyTstamp".equals(s)) return MyTstamp;
+    if("MyLoadDelay".equals(s)) return MyLoadDelay;
     if("PID_in".equals(s)) return PID_in;
     if("Tstamp_in".equals(s)) return Tstamp_in;
     if("MAIN_PE".equals(s)) return MAIN_PE;
@@ -122,6 +129,7 @@ public class MulticastConveyorCTL extends FBInstance
     else if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
     else if("MyPID".equals(ivName)) connect_MyPID((INT)newIV);
     else if("MyTstamp".equals(ivName)) connect_MyTstamp((INT)newIV);
+    else if("MyLoadDelay".equals(ivName)) connect_MyLoadDelay((INT)newIV);
     else if("PID_in".equals(ivName)) connect_PID_in((INT)newIV);
     else if("Tstamp_in".equals(ivName)) connect_Tstamp_in((INT)newIV);
     else if("MAIN_PE".equals(ivName)) connect_MAIN_PE((BOOL)newIV);
@@ -156,6 +164,12 @@ public class MulticastConveyorCTL extends FBInstance
  */
   public void connect_MyTstamp(INT newIV){
     MyTstamp = newIV;
+    }
+/** Connect the given variable to the input variable MyLoadDelay
+  * @param newIV The variable to connect
+ */
+  public void connect_MyLoadDelay(INT newIV){
+    MyLoadDelay = newIV;
     }
 /** Connect the given variable to the input variable PID_in
   * @param newIV The variable to connect
@@ -227,6 +241,7 @@ private void state_HELD1(){
   START.serviceEvent(this);
   alg_CLOCK();
   CNF.serviceEvent(this);
+  alg_DELAY();
 }
 private static final int index_HELD2 = 7;
 private void state_HELD2(){
@@ -235,6 +250,7 @@ private void state_HELD2(){
   START.serviceEvent(this);
   alg_CLOCK();
   CNF.serviceEvent(this);
+  alg_DELAY();
 }
 private static final int index_YOUFIRST = 8;
 private void state_YOUFIRST(){
@@ -250,6 +266,48 @@ private void state_YOUNEXT(){
   REPLY.serviceEvent(this);
   CNF.serviceEvent(this);
 state_START();
+}
+private static final int index_TEMP_STOP2 = 10;
+private void state_TEMP_STOP2(){
+  eccState = index_TEMP_STOP2;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_TEMP_START2 = 11;
+private void state_TEMP_START2(){
+  eccState = index_TEMP_START2;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_START();
+}
+private static final int index_TEMP_STOP1 = 12;
+private void state_TEMP_STOP1(){
+  eccState = index_TEMP_STOP1;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_TEMP_START1 = 13;
+private void state_TEMP_START1(){
+  eccState = index_TEMP_START1;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_YOUNEXT();
+}
+private static final int index_DELAY_UP1 = 14;
+private void state_DELAY_UP1(){
+  eccState = index_DELAY_UP1;
+  alg_DELAY_UP();
+state_HELD1();
+}
+private static final int index_DELAY_UP2 = 15;
+private void state_DELAY_UP2(){
+  eccState = index_DELAY_UP2;
+  alg_DELAY_UP();
+state_HELD2();
 }
 /** The default constructor. */
 public MulticastConveyorCTL(){
@@ -273,8 +331,12 @@ public MulticastConveyorCTL(){
 /** Services the REQ event. */
   public void service_REQ(){
     if ((eccState == index_START) && (!PE.value)) state_WANTING();
-    else if ((eccState == index_HELD1) && (PE.value&!MAIN_PE.value)) state_YOUNEXT();
-    else if ((eccState == index_HELD2) && (PE.value&!MAIN_PE.value)) state_START();
+    else if ((eccState == index_HELD1) && (PE.value&DelayElapse.value)) state_TEMP_STOP1();
+    else if ((eccState == index_HELD1)) state_DELAY_UP1();
+    else if ((eccState == index_TEMP_STOP1) && (!MAIN_PE.value)) state_TEMP_START1();
+    else if ((eccState == index_HELD2) && (PE.value&DelayElapse.value)) state_TEMP_STOP2();
+    else if ((eccState == index_TEMP_STOP2) && (!MAIN_PE.value)) state_TEMP_START2();
+    else if ((eccState == index_HELD2)) state_DELAY_UP2();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
@@ -300,6 +362,9 @@ LampClock.value=MyTstamp.value;
 MeFirst.value=false;
 YouFirst.value=false;
 
+DelayElapse.value=false;
+DelayCounter.value=0;
+
 System.out.println(this+" "+MotoRotate.value);
 System.out.println(MotoRotate.value);
 
@@ -310,6 +375,9 @@ System.out.println("In REQ State");
 
 MeFirst.value = false;
 YouFirst.value = false;
+
+DelayElapse.value=false;
+DelayCounter.value=0;
 
 LampClock.value++;
 
@@ -364,6 +432,18 @@ public void alg_YOUNEXT(){
 System.out.println("In YOUNEXT State");
 Tstamp_out.value = LampClock.value;
 PID_out.value = MyPID.value;
+
+}
+  /** ALGORITHM DELAY IN Java*/
+public void alg_DELAY(){
+if(DelayCounter.value>MyLoadDelay.value){
+DelayElapse.value=true;
+}
+
+}
+  /** ALGORITHM DELAY_UP IN Java*/
+public void alg_DELAY_UP(){
+DelayCounter.value++;
 
 }
 }

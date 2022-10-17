@@ -78,6 +78,7 @@
       <Parameter Name="Block" Value="0" />
       <Parameter Name="MyPID" Value="20" />
       <Parameter Name="MyTstamp" Value="0" />
+      <Parameter Name="MyLoadDelay" Value="5" />
     </FB>
     <EventConnections>
       <Connection Source="INIT" Destination="FC11.INIT" dx1="283.3333" />
@@ -108,7 +109,7 @@
       <Connection Source="Multicast_FC12.Tstamp_out" Destination="Multicast_Tstamp_out" dx1="2905.5554" />
       <Connection Source="Multicast_FC12.PID_out" Destination="Multicast_PID_out" dx1="2855.5554" />
       <Connection Source="PE3" Destination="Multicast_FC12.PE" dx1="1844.4443" />
-      <Connection Source="MAIN_PE3" Destination="Multicast_FC12.MAIN_PE" dx1="1772.2222" />
+      <Connection Source="MAIN_PE3" Destination="Multicast_FC12.MAIN_PE" dx1="1755.5555" />
     </DataConnections>
   </FBNetwork>
 </FBType>

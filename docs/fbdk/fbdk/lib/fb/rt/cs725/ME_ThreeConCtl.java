@@ -222,6 +222,7 @@ public ME_ThreeConCtl(){
     Multicast_FC12.Block.initializeNoException("0");
     Multicast_FC12.MyPID.initializeNoException("20");
     Multicast_FC12.MyTstamp.initializeNoException("0");
+    Multicast_FC12.MyLoadDelay.initializeNoException("5");
   }
 /** {@inheritDoc}
  * @param fbName {@inheritDoc}
