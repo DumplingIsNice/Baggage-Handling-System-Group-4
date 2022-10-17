@@ -61,7 +61,9 @@ Assumptions:
 
 ### Instructions
 
-To run this fbdk project... TBD
+To run this fbdk project
+ - Navigate to `docs/fbdk/fbdk`
+ - Click on `openFBDK.sh` to open up FBDK program
 
 Install `openjdk 11.0.16` or other java SDK/JRE compatible to the provided FBDK version.
 - Launch the application...
