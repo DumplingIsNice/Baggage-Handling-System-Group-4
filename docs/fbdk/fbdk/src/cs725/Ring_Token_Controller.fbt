@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="Ring_Token_Controller" Comment="Composite Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWCOMPFB." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-08" Remarks="Added DLY FB as example." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="Candidate" />
+        <With Var="Block" />
+        <With Var="PE" />
+        <With Var="PE_13" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="Candidate" />
+        <With Var="PE" />
+        <With Var="PE_13" />
+      </Event>
+      <Event Name="START" >
+        <With Var="Block" />
+      </Event>
+      <Event Name="STOP" >
+        <With Var="Block" />
+      </Event>
+      <Event Name="RToken" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="MotoRotate1" />
+        <With Var="MotoRotate2" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="MotoRotate1" />
+        <With Var="MotoRotate2" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="GToken" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Candidate" Type="BOOL" />
+      <VarDeclaration Name="Block" Type="BOOL" />
+      <VarDeclaration Name="PE" Type="BOOL" />
+      <VarDeclaration Name="PE_13" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MotoRotate1" Type="BOOL" />
+      <VarDeclaration Name="MotoRotate2" Type="BOOL" />
+      <VarDeclaration Name="BlockCon" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork >
+    <FB Name="FC11" Type="ConveyorCTL" x="305.55554" y="533.3333" >
+      <Parameter Name="PE" Value="0" />
+      <Parameter Name="Block" Value="0" />
+      <Parameter Name="Candidate" Value="0" />
+    </FB>
+    <FB Name="Conveyer_4" Type="Conveyor_4" x="2288.889" y="533.3333" />
+    <EventConnections>
+      <Connection Source="INIT" Destination="FC11.INIT" dx1="205.55554" />
+      <Connection Source="REQ" Destination="FC11.REQ" dx1="194.44444" />
+      <Connection Source="Conveyer_4.START" Destination="FC11.CAS_START" dx1="327.77777" dx2="261.1111" dy="-683.3333" />
+      <Connection Source="FC11.INITO" Destination="Conveyer_4.INIT" dx1="716.6666" />
+      <Connection Source="Conveyer_4.INITO" Destination="INITO" dx1="2972.2222" />
+      <Connection Source="Conveyer_4.CNF" Destination="CNF" dx1="2955.5554" />
+      <Connection Source="REQ" Destination="Conveyer_4.REQ" dx1="2177.7776" />
+      <Connection Source="Conveyer_4.STOP" Destination="FC11.CAS_STOP" dx1="227.77777" dx2="200.0" dy="-499.99997" />
+      <Connection Source="RToken" Destination="Conveyer_4.RToken" dx1="2138.889" />
+      <Connection Source="Conveyer_4.GToken" Destination="GToken" dx1="3000.0" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="FC11.MotoRotate" Destination="MotoRotate1" dx1="1077.7777" />
+      <Connection Source="Conveyer_4.MotoRotate" Destination="MotoRotate2" dx1="3061.111" />
+      <Connection Source="Conveyer_4.BlockCon" Destination="BlockCon" dx1="3022.2222" />
+      <Connection Source="Block" Destination="Conveyer_4.Block" dx1="2166.6665" />
+      <Connection Source="PE" Destination="Conveyer_4.PE" dx1="2200.0" />
+      <Connection Source="Candidate" Destination="Conveyer_4.Candidate" dx1="2111.111" />
+      <Connection Source="PE_13" Destination="Conveyer_4.PE_13" dx1="2150.0" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

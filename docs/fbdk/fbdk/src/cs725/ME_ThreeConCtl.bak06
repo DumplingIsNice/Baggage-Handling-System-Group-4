@@ -12,13 +12,13 @@
       <Event Name="INIT" Comment="Initialization Request" >
         <With Var="Candidate" />
         <With Var="Block" />
-        <With Var="PE7" />
+        <With Var="PE1" />
         <With Var="PE13" />
       </Event>
       <Event Name="REQ" Comment="Normal Execution Request" >
         <With Var="Block" />
         <With Var="Candidate" />
-        <With Var="PE7" />
+        <With Var="PE1" />
         <With Var="MAIN_PE3" />
         <With Var="PE13" />
       </Event>
@@ -56,7 +56,7 @@
     <InputVars>
       <VarDeclaration Name="Candidate" Type="BOOL" />
       <VarDeclaration Name="Block" Type="BOOL" />
-      <VarDeclaration Name="PE7" Type="BOOL" />
+      <VarDeclaration Name="PE1" Type="BOOL" />
       <VarDeclaration Name="PE13" Type="BOOL" />
       <VarDeclaration Name="PE3" Type="BOOL" />
       <VarDeclaration Name="Multicast_PID_in" Type="INT" />
@@ -107,7 +107,7 @@
     <DataConnections>
       <Connection Source="FC13.MotoRotate" Destination="MotoRotate3" dx1="4316.6665" />
       <Connection Source="FC11.MotoRotate" Destination="MotoRotate1" dx1="1161.1111" />
-      <Connection Source="PE7" Destination="FC11.PE" dx1="283.3333" />
+      <Connection Source="PE1" Destination="FC11.PE" dx1="283.3333" />
       <Connection Source="Block" Destination="FC11.Block" dx1="266.66666" />
       <Connection Source="FC11.BlockCon" Destination="BlockCon" dx1="1122.2222" />
       <Connection Source="Candidate" Destination="FC11.Candidate" dx1="211.1111" />

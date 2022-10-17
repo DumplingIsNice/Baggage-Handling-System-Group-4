@@ -13,10 +13,10 @@ public class ME_ThreeConCtl extends FBInstance
   public BOOL Candidate = new BOOL();
 /** VAR Block */
   public BOOL Block = new BOOL();
-/** VAR PE7 */
-  public BOOL PE7 = new BOOL();
-/** VAR PE13 */
-  public BOOL PE13 = new BOOL();
+/** VAR PE1 */
+  public BOOL PE1 = new BOOL();
+/** VAR PE2 */
+  public BOOL PE2 = new BOOL();
 /** VAR PE3 */
   public BOOL PE3 = new BOOL();
 /** VAR Multicast_PID_in */
@@ -87,8 +87,8 @@ public class ME_ThreeConCtl extends FBInstance
   public ANY ivNamed(String s) throws FBRManagementException{
     if("Candidate".equals(s)) return Candidate;
     if("Block".equals(s)) return Block;
-    if("PE7".equals(s)) return PE7;
-    if("PE13".equals(s)) return PE13;
+    if("PE1".equals(s)) return PE1;
+    if("PE2".equals(s)) return PE2;
     if("PE3".equals(s)) return PE3;
     if("Multicast_PID_in".equals(s)) return Multicast_PID_in;
     if("Multicast_Tstamp_in".equals(s)) return Multicast_Tstamp_in;
@@ -115,8 +115,8 @@ public class ME_ThreeConCtl extends FBInstance
     throws FBRManagementException{
     if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
     else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
-    else if("PE7".equals(ivName)) connect_PE7((BOOL)newIV);
-    else if("PE13".equals(ivName)) connect_PE13((BOOL)newIV);
+    else if("PE1".equals(ivName)) connect_PE1((BOOL)newIV);
+    else if("PE2".equals(ivName)) connect_PE2((BOOL)newIV);
     else if("PE3".equals(ivName)) connect_PE3((BOOL)newIV);
     else if("Multicast_PID_in".equals(ivName)) connect_Multicast_PID_in((INT)newIV);
     else if("Multicast_Tstamp_in".equals(ivName)) connect_Multicast_Tstamp_in((INT)newIV);
@@ -129,7 +129,7 @@ public class ME_ThreeConCtl extends FBInstance
  */
   public void connect_Candidate(BOOL newIV) throws FBRManagementException{
     Candidate = newIV;
-    FC11.connectIVNoException("Candidate",Candidate);
+    RingToken_FC11.connectIVNoException("Candidate",Candidate);
     }
 /** Connect the given variable to the input variable Block
   * @param newIV The variable to connect
@@ -137,23 +137,23 @@ public class ME_ThreeConCtl extends FBInstance
  */
   public void connect_Block(BOOL newIV) throws FBRManagementException{
     Block = newIV;
-    FC11.connectIVNoException("Block",Block);
+    RingToken_FC11.connectIVNoException("Block",Block);
     }
-/** Connect the given variable to the input variable PE7
+/** Connect the given variable to the input variable PE1
   * @param newIV The variable to connect
   * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE7(BOOL newIV) throws FBRManagementException{
-    PE7 = newIV;
-    FC11.connectIVNoException("PE",PE7);
+  public void connect_PE1(BOOL newIV) throws FBRManagementException{
+    PE1 = newIV;
+    RingToken_FC11.connectIVNoException("PE",PE1);
     }
-/** Connect the given variable to the input variable PE13
+/** Connect the given variable to the input variable PE2
   * @param newIV The variable to connect
   * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE13(BOOL newIV) throws FBRManagementException{
-    PE13 = newIV;
-    FC11.connectIVNoException("PE_13",PE13);
+  public void connect_PE2(BOOL newIV) throws FBRManagementException{
+    PE2 = newIV;
+    RingToken_FC11.connectIVNoException("PE13",PE2);
     }
 /** Connect the given variable to the input variable PE3
   * @param newIV The variable to connect
@@ -187,8 +187,8 @@ public class ME_ThreeConCtl extends FBInstance
     MAIN_PE3 = newIV;
     Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
     }
-/** FB FC11 */
-  protected Conveyor_7 FC11 = new Conveyor_7() ;
+/** FB RingToken_FC11 */
+  protected Conveyor_7 RingToken_FC11 = new Conveyor_7() ;
 /** FB FC13 */
   protected ConveyorCTL FC13 = new ConveyorCTL() ;
 /** FB Multicast_FC12 */
@@ -196,28 +196,26 @@ public class ME_ThreeConCtl extends FBInstance
 /** The default constructor. */
 public ME_ThreeConCtl(){
     super();
-    INIT.connectTo(FC11.INIT);
-    REQ.connectTo(FC11.REQ);
+    INIT.connectTo(RingToken_FC11.INIT);
+    REQ.connectTo(RingToken_FC11.REQ);
     FC13.INITO.connectTo(INITO);
     FC13.CNF.connectTo(CNF);
-    FC11.STOP.connectTo(STOP);
-    FC11.START.connectTo(START);
+    RingToken_FC11.STOP.connectTo(STOP);
+    RingToken_FC11.START.connectTo(START);
     REQ.connectTo(FC13.REQ);
-    FC11.CNF.connectTo(CNF);
+    RingToken_FC11.CNF.connectTo(CNF);
     MULTI_LISTEN.connectTo(Multicast_FC12.LISTEN);
     Multicast_FC12.REPLY.connectTo(MULTI_REPLY);
     REQ.connectTo(Multicast_FC12.REQ);
     Multicast_FC12.CNF.connectTo(CNF);
-    FC11.INITO.connectTo(Multicast_FC12.INIT);
+    RingToken_FC11.INITO.connectTo(Multicast_FC12.INIT);
     Multicast_FC12.INITO.connectTo(FC13.INIT);
-    RToken.connectTo(FC11.RToken);
-    FC11.GToken.connectTo(GToken);
     MotoRotate3 = (BOOL)FC13.ovNamedNoException("MotoRotate");
-    MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
-    FC11.connectIVNoException("PE",PE7);
-    FC11.connectIVNoException("Block",Block);
-    BlockCon = (BOOL)FC11.ovNamedNoException("BlockCon");
-    FC11.connectIVNoException("Candidate",Candidate);
+    MotoRotate1 = (BOOL)RingToken_FC11.ovNamedNoException("MotoRotate");
+    RingToken_FC11.connectIVNoException("PE",PE1);
+    RingToken_FC11.connectIVNoException("Block",Block);
+    BlockCon = (BOOL)RingToken_FC11.ovNamedNoException("BlockCon");
+    RingToken_FC11.connectIVNoException("Candidate",Candidate);
     MotoRotate2 = (BOOL)Multicast_FC12.ovNamedNoException("MotoRotate");
     Multicast_FC12.connectIVNoException("PID_in",Multicast_PID_in);
     Multicast_FC12.connectIVNoException("Tstamp_in",Multicast_Tstamp_in);
@@ -225,7 +223,7 @@ public ME_ThreeConCtl(){
     Multicast_PID_out = (INT)Multicast_FC12.ovNamedNoException("PID_out");
     Multicast_FC12.connectIVNoException("PE",PE3);
     Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
-    FC11.connectIVNoException("PE_13",PE13);
+    RingToken_FC11.connectIVNoException("PE13",PE2);
     FC13.PE.initializeNoException("0");
     FC13.Block.initializeNoException("0");
     FC13.Candidate.initializeNoException("0");
@@ -242,19 +240,19 @@ public ME_ThreeConCtl(){
   public void initialize(String fbName, Resource r)
   throws FBRManagementException{
     super.initialize(fbName,r);
-    FC11.initialize("FC11",r);
+    RingToken_FC11.initialize("RingToken_FC11",r);
     FC13.initialize("FC13",r);
     Multicast_FC12.initialize("Multicast_FC12",r);
 }
 /** Start the FB instances. */
 public void start( ){
-  FC11.start();
+  RingToken_FC11.start();
   FC13.start();
   Multicast_FC12.start();
 }
 /** Stop the FB instances. */
 public void stop( ){
-  FC11.stop();
+  RingToken_FC11.stop();
   FC13.stop();
   Multicast_FC12.stop();
 }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="Conveyor_4" Comment="Basic Function Block Type" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="PE" />
+        <With Var="Block" />
+        <With Var="Candidate" />
+        <With Var="PE13" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="PE" />
+        <With Var="Block" />
+        <With Var="Candidate" />
+        <With Var="PE13" />
+      </Event>
+      <Event Name="CAS_STOP" >
+      </Event>
+      <Event Name="CAS_START" >
+      </Event>
+      <Event Name="RToken" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="MotoRotate" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="MotoRotate" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="STOP" >
+      </Event>
+      <Event Name="START" >
+      </Event>
+      <Event Name="GToken" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration Name="Block" Type="BOOL" />
+      <VarDeclaration Name="Candidate" Type="BOOL" />
+      <VarDeclaration Name="PE13" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MotoRotate" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration Name="BlockCon" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="lastPE" Type="BOOL" InitialValue="1" />
+      <VarDeclaration Name="lastBlock" Type="BOOL" InitialValue="0" />
+    </InternalVars>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="1683.3333" y="511.11108" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="2227.7776" y="150.0" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="REQ" Comment="Normal execution" x="2555.5554" y="1155.5555" >
+        <ECAction Algorithm="REQ" Output="CNF" />
+        <ECAction Output="STOP" />
+      </ECState>
+      <ECState Name="NO_TOKEN" x="1672.2222" y="1155.5555" >
+      </ECState>
+      <ECState Name="HAVE_TOKEN" x="1666.6666" y="1655.5555" >
+        <ECAction Algorithm="HAVE_TOKEN" Output="CNF" />
+      </ECState>
+      <ECState Name="ENTER_CS" x="2288.889" y="2116.6665" >
+        <ECAction Algorithm="CAS_START" Output="CNF" />
+        <ECAction Output="START" />
+      </ECState>
+      <ECState Name="RELEASE_TOKEN" x="672.22217" y="2111.111" >
+        <ECAction Output="GToken" />
+        <ECAction Algorithm="REL_TOKEN" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="2227.7776" y="511.11108" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="1683.3333" y="150.0" />
+      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="1" x="2166.6665" y="1011.1111" />
+      <ECTransition Source="START" Destination="NO_TOKEN" Condition="1" x="1672.2222" y="849.99994" />
+      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="REQ&#38;!PE" x="2177.7776" y="1277.7777" />
+      <ECTransition Source="NO_TOKEN" Destination="HAVE_TOKEN" Condition="RToken" x="1666.6666" y="1366.6666" />
+      <ECTransition Source="HAVE_TOKEN" Destination="ENTER_CS" Condition="REQ&#38;!PE" x="2011.1111" y="1911.1111" />
+      <ECTransition Source="RELEASE_TOKEN" Destination="NO_TOKEN" Condition="1" x="672.22217" y="1161.1111" />
+      <ECTransition Source="ENTER_CS" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE13" x="1261.1111" y="2655.5554" />
+      <ECTransition Source="HAVE_TOKEN" Destination="RELEASE_TOKEN" Condition="REQ&#38;PE" x="1177.7777" y="1838.8888" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+    <ST Text="MotoRotate := TRUE;&#10;Block := FALSE;&#10;&#10;System.out.println(this + &#34; &#34; + MotoRotate);&#10;System.out.println(MotoRotate);&#10;" />
+  </Algorithm>
+  <Algorithm Name="REQ" Comment="Normally executed algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;BAG DETECTED, STOPPING CONVEYOR 3 &#38; 4&#34;);&#10;MotoRotate.value=false;&#10;" />
+  </Algorithm>
+  <Algorithm Name="START" >
+    <ST Text="MotoRotate:=TRUE;&#10;System.out.println(this + &#34; Start &#34; + MotoRotate);&#10;&#10;System.out.println(&#34;Start &#34; + MotoRotate);&#10;" />
+  </Algorithm>
+  <Algorithm Name="STOP" >
+    <ST Text="MotoRotate := FALSE;&#10;System.out.println(this + &#34; Stop &#34; + MotoRotate);&#10;&#10;System.out.println(&#34;Stop &#34; + MotoRotate);&#10;" />
+  </Algorithm>
+  <Algorithm Name="HAVE_TOKEN" >
+    <Other Language="Java" Text="System.out.println(&#34;Have the token&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="CAS_START" >
+    <Other Language="Java" Text="System.out.println(&#34;Starting again&#34;);&#10;System.out.println(&#34;Token received&#34;);&#10;MotoRotate.value=true;&#10;" />
+  </Algorithm>
+  <Algorithm Name="REL_TOKEN" >
+    <Other Language="Java" Text="System.out.println(&#34;Released token from c4&#34;);&#10;" />
+  </Algorithm>
+  </BasicFB>
+</FBType>

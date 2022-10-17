@@ -13,8 +13,8 @@ public class ME_ThreeConCtl extends FBInstance
   public BOOL Candidate = new BOOL();
 /** VAR Block */
   public BOOL Block = new BOOL();
-/** VAR PE7 */
-  public BOOL PE7 = new BOOL();
+/** VAR PE1 */
+  public BOOL PE1 = new BOOL();
 /** VAR PE13 */
   public BOOL PE13 = new BOOL();
 /** VAR PE3 */
@@ -87,7 +87,7 @@ public class ME_ThreeConCtl extends FBInstance
   public ANY ivNamed(String s) throws FBRManagementException{
     if("Candidate".equals(s)) return Candidate;
     if("Block".equals(s)) return Block;
-    if("PE7".equals(s)) return PE7;
+    if("PE1".equals(s)) return PE1;
     if("PE13".equals(s)) return PE13;
     if("PE3".equals(s)) return PE3;
     if("Multicast_PID_in".equals(s)) return Multicast_PID_in;
@@ -115,7 +115,7 @@ public class ME_ThreeConCtl extends FBInstance
     throws FBRManagementException{
     if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
     else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
-    else if("PE7".equals(ivName)) connect_PE7((BOOL)newIV);
+    else if("PE1".equals(ivName)) connect_PE1((BOOL)newIV);
     else if("PE13".equals(ivName)) connect_PE13((BOOL)newIV);
     else if("PE3".equals(ivName)) connect_PE3((BOOL)newIV);
     else if("Multicast_PID_in".equals(ivName)) connect_Multicast_PID_in((INT)newIV);
@@ -139,21 +139,19 @@ public class ME_ThreeConCtl extends FBInstance
     Block = newIV;
     FC11.connectIVNoException("Block",Block);
     }
-/** Connect the given variable to the input variable PE7
+/** Connect the given variable to the input variable PE1
   * @param newIV The variable to connect
   * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE7(BOOL newIV) throws FBRManagementException{
-    PE7 = newIV;
-    FC11.connectIVNoException("PE",PE7);
+  public void connect_PE1(BOOL newIV) throws FBRManagementException{
+    PE1 = newIV;
+    FC11.connectIVNoException("PE",PE1);
     }
 /** Connect the given variable to the input variable PE13
   * @param newIV The variable to connect
-  * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE13(BOOL newIV) throws FBRManagementException{
+  public void connect_PE13(BOOL newIV){
     PE13 = newIV;
-    FC11.connectIVNoException("PE_13",PE13);
     }
 /** Connect the given variable to the input variable PE3
   * @param newIV The variable to connect
@@ -214,7 +212,7 @@ public ME_ThreeConCtl(){
     FC11.GToken.connectTo(GToken);
     MotoRotate3 = (BOOL)FC13.ovNamedNoException("MotoRotate");
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
-    FC11.connectIVNoException("PE",PE7);
+    FC11.connectIVNoException("PE",PE1);
     FC11.connectIVNoException("Block",Block);
     BlockCon = (BOOL)FC11.ovNamedNoException("BlockCon");
     FC11.connectIVNoException("Candidate",Candidate);
@@ -225,7 +223,6 @@ public ME_ThreeConCtl(){
     Multicast_PID_out = (INT)Multicast_FC12.ovNamedNoException("PID_out");
     Multicast_FC12.connectIVNoException("PE",PE3);
     Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
-    FC11.connectIVNoException("PE_13",PE13);
     FC13.PE.initializeNoException("0");
     FC13.Block.initializeNoException("0");
     FC13.Candidate.initializeNoException("0");

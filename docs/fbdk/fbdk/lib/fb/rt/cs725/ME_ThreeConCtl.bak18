@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK ME_ThreeConCtl
   * @author JHC
-  * @version 20221018/JHC
+  * @version 20221017/JHC
   */
 public class ME_ThreeConCtl extends FBInstance
 {
@@ -13,10 +13,10 @@ public class ME_ThreeConCtl extends FBInstance
   public BOOL Candidate = new BOOL();
 /** VAR Block */
   public BOOL Block = new BOOL();
-/** VAR PE7 */
-  public BOOL PE7 = new BOOL();
-/** VAR PE13 */
-  public BOOL PE13 = new BOOL();
+/** VAR PE1 */
+  public BOOL PE1 = new BOOL();
+/** VAR PE2 */
+  public BOOL PE2 = new BOOL();
 /** VAR PE3 */
   public BOOL PE3 = new BOOL();
 /** VAR Multicast_PID_in */
@@ -43,8 +43,6 @@ public class ME_ThreeConCtl extends FBInstance
  public EventOutput REQ = new EventOutput();
 /** EVENT MULTI_LISTEN */
  public EventOutput MULTI_LISTEN = new EventOutput();
-/** EVENT RToken */
- public EventOutput RToken = new EventOutput();
 /** Initialization Confirm */
  public EventOutput INITO = new EventOutput();
 /** Execution Confirmation */
@@ -55,8 +53,6 @@ public class ME_ThreeConCtl extends FBInstance
  public EventOutput STOP = new EventOutput();
 /** EVENT MULTI_REPLY */
  public EventOutput MULTI_REPLY = new EventOutput();
-/** EVENT GToken */
- public EventOutput GToken = new EventOutput();
 /** {@inheritDoc}
 * @param s {@inheritDoc}
 * @return {@inheritDoc}
@@ -65,7 +61,6 @@ public class ME_ThreeConCtl extends FBInstance
     if("INIT".equals(s)) return INIT;
     if("REQ".equals(s)) return REQ;
     if("MULTI_LISTEN".equals(s)) return MULTI_LISTEN;
-    if("RToken".equals(s)) return RToken;
     return super.eiNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -77,7 +72,6 @@ public class ME_ThreeConCtl extends FBInstance
     if("START".equals(s)) return START;
     if("STOP".equals(s)) return STOP;
     if("MULTI_REPLY".equals(s)) return MULTI_REPLY;
-    if("GToken".equals(s)) return GToken;
     return super.eoNamed(s);}
 /** {@inheritDoc}
 * @param s {@inheritDoc}
@@ -87,8 +81,8 @@ public class ME_ThreeConCtl extends FBInstance
   public ANY ivNamed(String s) throws FBRManagementException{
     if("Candidate".equals(s)) return Candidate;
     if("Block".equals(s)) return Block;
-    if("PE7".equals(s)) return PE7;
-    if("PE13".equals(s)) return PE13;
+    if("PE1".equals(s)) return PE1;
+    if("PE2".equals(s)) return PE2;
     if("PE3".equals(s)) return PE3;
     if("Multicast_PID_in".equals(s)) return Multicast_PID_in;
     if("Multicast_Tstamp_in".equals(s)) return Multicast_Tstamp_in;
@@ -115,8 +109,8 @@ public class ME_ThreeConCtl extends FBInstance
     throws FBRManagementException{
     if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
     else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
-    else if("PE7".equals(ivName)) connect_PE7((BOOL)newIV);
-    else if("PE13".equals(ivName)) connect_PE13((BOOL)newIV);
+    else if("PE1".equals(ivName)) connect_PE1((BOOL)newIV);
+    else if("PE2".equals(ivName)) connect_PE2((BOOL)newIV);
     else if("PE3".equals(ivName)) connect_PE3((BOOL)newIV);
     else if("Multicast_PID_in".equals(ivName)) connect_Multicast_PID_in((INT)newIV);
     else if("Multicast_Tstamp_in".equals(ivName)) connect_Multicast_Tstamp_in((INT)newIV);
@@ -139,21 +133,19 @@ public class ME_ThreeConCtl extends FBInstance
     Block = newIV;
     FC11.connectIVNoException("Block",Block);
     }
-/** Connect the given variable to the input variable PE7
+/** Connect the given variable to the input variable PE1
   * @param newIV The variable to connect
   * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE7(BOOL newIV) throws FBRManagementException{
-    PE7 = newIV;
-    FC11.connectIVNoException("PE",PE7);
+  public void connect_PE1(BOOL newIV) throws FBRManagementException{
+    PE1 = newIV;
+    FC11.connectIVNoException("PE",PE1);
     }
-/** Connect the given variable to the input variable PE13
+/** Connect the given variable to the input variable PE2
   * @param newIV The variable to connect
-  * @throws FBRManagementException An internal connection failed.
  */
-  public void connect_PE13(BOOL newIV) throws FBRManagementException{
-    PE13 = newIV;
-    FC11.connectIVNoException("PE_13",PE13);
+  public void connect_PE2(BOOL newIV){
+    PE2 = newIV;
     }
 /** Connect the given variable to the input variable PE3
   * @param newIV The variable to connect
@@ -188,7 +180,7 @@ public class ME_ThreeConCtl extends FBInstance
     Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
     }
 /** FB FC11 */
-  protected Conveyor_7 FC11 = new Conveyor_7() ;
+  protected ConveyorCTL FC11 = new ConveyorCTL() ;
 /** FB FC13 */
   protected ConveyorCTL FC13 = new ConveyorCTL() ;
 /** FB Multicast_FC12 */
@@ -210,11 +202,9 @@ public ME_ThreeConCtl(){
     Multicast_FC12.CNF.connectTo(CNF);
     FC11.INITO.connectTo(Multicast_FC12.INIT);
     Multicast_FC12.INITO.connectTo(FC13.INIT);
-    RToken.connectTo(FC11.RToken);
-    FC11.GToken.connectTo(GToken);
     MotoRotate3 = (BOOL)FC13.ovNamedNoException("MotoRotate");
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
-    FC11.connectIVNoException("PE",PE7);
+    FC11.connectIVNoException("PE",PE1);
     FC11.connectIVNoException("Block",Block);
     BlockCon = (BOOL)FC11.ovNamedNoException("BlockCon");
     FC11.connectIVNoException("Candidate",Candidate);
@@ -225,7 +215,6 @@ public ME_ThreeConCtl(){
     Multicast_PID_out = (INT)Multicast_FC12.ovNamedNoException("PID_out");
     Multicast_FC12.connectIVNoException("PE",PE3);
     Multicast_FC12.connectIVNoException("MAIN_PE",MAIN_PE3);
-    FC11.connectIVNoException("PE_13",PE13);
     FC13.PE.initializeNoException("0");
     FC13.Block.initializeNoException("0");
     FC13.Candidate.initializeNoException("0");
