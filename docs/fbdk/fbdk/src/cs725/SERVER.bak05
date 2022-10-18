@@ -85,7 +85,6 @@
         <ECAction Algorithm="SET_C2_FLAG" />
       </ECState>
       <ECState Name="REQ_F_C6_3" x="5022.222" y="1844.4443" >
-        <ECAction Algorithm="SET_C6_FLAG" />
       </ECState>
       <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1111.1111" y="1594.4443" />
       <ECTransition Source="INIT" Destination="START" Condition="1" x="1222.2222" y="1166.6666" />
@@ -95,7 +94,7 @@
       <ECTransition Source="WAIT_C2" Destination="DECISION" Condition="REQ&#38;!PE_7" x="4200.0" y="1038.8888" />
       <ECTransition Source="GIVE_C6_TOKEN" Destination="WAIT_C6" Condition="RET_F_C6" x="3749.9998" y="1699.9999" />
       <ECTransition Source="WAIT_C6" Destination="DECISION" Condition="REQ&#38;!PE_7" x="4183.333" y="1483.3333" />
-      <ECTransition Source="DECISION" Destination="INTER" Condition="C2_FLAG" x="3644.4443" y="1138.8888" />
+      <ECTransition Source="DECISION" Destination="INTER" Condition="C2_FLAG" x="3677.7776" y="1138.8888" />
       <ECTransition Source="DECISION" Destination="INTER2" Condition="!C2_FLAG" x="3394.4443" y="1333.3333" />
       <ECTransition Source="INTER2" Destination="START" Condition="!C6_FLAG" x="2122.2222" y="1233.3333" />
       <ECTransition Source="INTER2" Destination="GIVE_C6_TOKEN" Condition="C6_FLAG" x="2500.0" y="1583.3333" />

@@ -238,7 +238,7 @@ MotoRotate.value=false;
 public void alg_TOKEN_REC(){
 MotoRotate.value=true;
 System.out.println("----------------");
-System.out.println("TOKEN RECEIVED IN CS 1");
+System.out.println("TOKEN RECEIVED IN CS");
 System.out.println("----------------");
 
 }

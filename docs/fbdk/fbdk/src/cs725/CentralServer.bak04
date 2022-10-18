@@ -63,6 +63,7 @@
     <FB Name="FC2" Type="CentralServerClient" x="1849.9999" y="449.99997" />
     <EventConnections>
       <Connection Source="INIT" Destination="FC11.INIT" dx1="227.77777" />
+      <Connection Source="REQ" Destination="FC11.REQ" dx1="216.66666" />
       <Connection Source="STOP" Destination="FC2.CAS_STOP" dx1="1722.2222" />
       <Connection Source="START" Destination="FC2.CAS_START" dx1="1711.1111" />
       <Connection Source="REQ" Destination="FC2.REQ" dx1="1738.8888" />
@@ -74,7 +75,6 @@
       <Connection Source="FC2.REQ_TOKEN" Destination="REQ_TOKEN" dx1="2738.8887" />
       <Connection Source="FC2.RET_TOKEN" Destination="RET_TOKEN" dx1="2733.3333" />
       <Connection Source="F_SERVER" Destination="FC2.F_SERVER" dx1="1655.5555" />
-      <Connection Source="REQ" Destination="FC11.REQ" dx1="216.66666" />
     </EventConnections>
     <DataConnections>
       <Connection Source="FC11.MotoRotate" Destination="MotoRotate1" dx1="1066.6666" />

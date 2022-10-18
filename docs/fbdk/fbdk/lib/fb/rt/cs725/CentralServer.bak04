@@ -123,6 +123,7 @@ public class CentralServer extends FBInstance
 public CentralServer(){
     super();
     INIT.connectTo(FC11.INIT);
+    REQ.connectTo(FC11.REQ);
     STOP.connectTo(FC2.CAS_STOP);
     START.connectTo(FC2.CAS_START);
     REQ.connectTo(FC2.REQ);
@@ -134,7 +135,6 @@ public CentralServer(){
     FC2.REQ_TOKEN.connectTo(REQ_TOKEN);
     FC2.RET_TOKEN.connectTo(RET_TOKEN);
     F_SERVER.connectTo(FC2.F_SERVER);
-    REQ.connectTo(FC11.REQ);
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
     FC2.connectIVNoException("PE",PE);
     FC2.connectIVNoException("Block",Block);

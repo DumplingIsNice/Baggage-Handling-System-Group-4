@@ -112,7 +112,6 @@ private void state_WAIT_C2(){
 private static final int index_DECISION = 5;
 private void state_DECISION(){
   eccState = index_DECISION;
-  alg_BAG_CLEARED();
     if(C2_FLAG.value) state_INTER();
     else if(!C2_FLAG.value) state_INTER2();
 }
@@ -171,7 +170,6 @@ state_WAIT_C6();
 private static final int index_REQ_F_C6_3 = 15;
 private void state_REQ_F_C6_3(){
   eccState = index_REQ_F_C6_3;
-  alg_SET_C6_FLAG();
 state_WAIT_C6();
 }
 /** The default constructor. */
@@ -201,7 +199,6 @@ public SERVER(){
   public void service_REQ_F_C2(){
     if ((eccState == index_WAIT_C2)) state_REQ_F_C2_2();
     else if ((eccState == index_WAIT_C6)) state_REQ_F_C2_3();
-    else if ((eccState == index_START)) state_GIVE_C2_TOKEN();
   }
 /** Services the RET_F_C2 event. */
   public void service_RET_F_C2(){
@@ -213,18 +210,13 @@ public SERVER(){
     if ((eccState == index_GIVE_C2_TOKEN)) state_REQ_F_C6();
     else if ((eccState == index_WAIT_C2)) state_REQ_F_C6_2();
     else if ((eccState == index_WAIT_C6)) state_REQ_F_C6_3();
-    else if ((eccState == index_START)) state_GIVE_C6_TOKEN();
   }
 /** Services the RET_F_C6 event. */
   public void service_RET_F_C6(){
     if ((eccState == index_GIVE_C6_TOKEN)) state_WAIT_C6();
   }
-  /** ALGORITHM INIT IN Java*/
+  /** ALGORITHM INIT IN ST*/
 public void alg_INIT(){
-C2_FLAG.value = false;
-C6_FLAG.value = false;
-PRIORITY.value = false;
-
 }
   /** ALGORITHM REQ IN ST*/
 public void alg_REQ(){
@@ -263,16 +255,6 @@ PRIORITY.value = true;
 } else {
 PRIORITY.value = false;
 }
-
-}
-  /** ALGORITHM BAG_CLEARED IN Java*/
-public void alg_BAG_CLEARED(){
-System.out.println("---------------");
-System.out.println("BAG HAS LEFT CS 1");
-System.out.println(C2_FLAG.value);
-System.out.println(C6_FLAG.value);
-System.out.println(PRIORITY.value);
-System.out.println("---------------");
 
 }
 }

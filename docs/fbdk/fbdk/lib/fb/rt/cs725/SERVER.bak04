@@ -112,7 +112,6 @@ private void state_WAIT_C2(){
 private static final int index_DECISION = 5;
 private void state_DECISION(){
   eccState = index_DECISION;
-  alg_BAG_CLEARED();
     if(C2_FLAG.value) state_INTER();
     else if(!C2_FLAG.value) state_INTER2();
 }
@@ -171,7 +170,6 @@ state_WAIT_C6();
 private static final int index_REQ_F_C6_3 = 15;
 private void state_REQ_F_C6_3(){
   eccState = index_REQ_F_C6_3;
-  alg_SET_C6_FLAG();
 state_WAIT_C6();
 }
 /** The default constructor. */
@@ -263,16 +261,6 @@ PRIORITY.value = true;
 } else {
 PRIORITY.value = false;
 }
-
-}
-  /** ALGORITHM BAG_CLEARED IN Java*/
-public void alg_BAG_CLEARED(){
-System.out.println("---------------");
-System.out.println("BAG HAS LEFT CS 1");
-System.out.println(C2_FLAG.value);
-System.out.println(C6_FLAG.value);
-System.out.println(PRIORITY.value);
-System.out.println("---------------");
 
 }
 }

@@ -116,7 +116,7 @@
     <Other Language="Java" Text="MotoRotate.value=false;&#10;" />
   </Algorithm>
   <Algorithm Name="TOKEN_REC" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN RECEIVED IN CS 1&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN RECEIVED IN CS&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
   </Algorithm>
   <Algorithm Name="TOKEN_RETURN" >
     <Other Language="Java" Text="System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN IS BEING RETURNED BY CS&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />

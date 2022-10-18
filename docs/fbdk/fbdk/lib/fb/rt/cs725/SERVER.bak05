@@ -171,7 +171,6 @@ state_WAIT_C6();
 private static final int index_REQ_F_C6_3 = 15;
 private void state_REQ_F_C6_3(){
   eccState = index_REQ_F_C6_3;
-  alg_SET_C6_FLAG();
 state_WAIT_C6();
 }
 /** The default constructor. */

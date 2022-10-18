@@ -104,7 +104,7 @@
       <ECTransition Source="CAS_STOP_2" Destination="TOKEN_RECEIVED" Condition="CAS_START" x="522.2222" y="1333.3333" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
-    <ST Text="MotoRotate := TRUE;&#10;Block := FALSE;&#10;" />
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;" />
   </Algorithm>
   <Algorithm Name="REQ" Comment="Normally executed algorithm" >
     <Other Language="Java" Text="System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;BAG DETECTED BY CS !!&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;MotoRotate.value=false;&#10;" />
@@ -116,7 +116,7 @@
     <Other Language="Java" Text="MotoRotate.value=false;&#10;" />
   </Algorithm>
   <Algorithm Name="TOKEN_REC" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN RECEIVED IN CS 1&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN RECEIVED IN CS&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
   </Algorithm>
   <Algorithm Name="TOKEN_RETURN" >
     <Other Language="Java" Text="System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN IS BEING RETURNED BY CS&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
