@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="SERVER" Comment="SERVER Function Block Type for Central Server ME Algorithm" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="PE_7" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="PE_7" />
+      </Event>
+      <Event Name="REQ_F_C2" >
+      </Event>
+      <Event Name="RET_F_C2" >
+      </Event>
+      <Event Name="REQ_F_C6" >
+      </Event>
+      <Event Name="RET_F_C6" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+      </Event>
+      <Event Name="T_C2" >
+      </Event>
+      <Event Name="T_C6" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE_7" Type="BOOL" Comment="Input event qualifier" />
+    </InputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="C2_FLAG" Type="BOOL" />
+      <VarDeclaration Name="C6_FLAG" Type="BOOL" />
+      <VarDeclaration Name="PRIORITY" Type="BOOL" />
+    </InternalVars>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="1716.6666" y="1316.6666" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="755.55554" y="1338.8888" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+      </ECState>
+      <ECState Name="GIVE_C2_TOKEN" x="2805.5554" y="583.3333" >
+        <ECAction Algorithm="GIVE_C2_TOKEN" Output="T_C2" />
+      </ECState>
+      <ECState Name="REQ_F_C6" x="2783.3333" y="233.33333" >
+        <ECAction Algorithm="SET_C6_FLAG" />
+      </ECState>
+      <ECState Name="WAIT_C2" x="4300.0" y="838.88885" >
+      </ECState>
+      <ECState Name="DECISION" x="3883.3333" y="1250.0" >
+      </ECState>
+      <ECState Name="GIVE_C6_TOKEN" x="2861.111" y="1977.7777" >
+        <ECAction Algorithm="GIVE_C6_TOKEN" Output="T_C6" />
+      </ECState>
+      <ECState Name="WAIT_C6" x="4283.333" y="1699.9999" >
+      </ECState>
+      <ECState Name="INTER" x="3255.5554" y="1138.8888" >
+      </ECState>
+      <ECState Name="INTER2" x="2400.0" y="1322.2222" >
+      </ECState>
+      <ECState Name="INTER3" x="2661.111" y="1011.1111" >
+      </ECState>
+      <ECState Name="REQ_F_C2" x="2866.6665" y="2316.6665" >
+        <ECAction Algorithm="SET_C2_FLAG" />
+      </ECState>
+      <ECState Name="REQ_F_C2_2" x="4883.333" y="544.4444" >
+        <ECAction Algorithm="SET_C2_FLAG" />
+      </ECState>
+      <ECState Name="REQ_F_C6_2" x="5050.0" y="1005.55554" >
+        <ECAction Algorithm="SET_C6_FLAG" />
+      </ECState>
+      <ECState Name="REQ_F_C2_3" x="5061.111" y="1477.7777" >
+        <ECAction Algorithm="SET_C2_FLAG" />
+      </ECState>
+      <ECState Name="REQ_F_C6_3" x="5022.222" y="1844.4443" >
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1111.1111" y="1594.4443" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="1222.2222" y="1166.6666" />
+      <ECTransition Source="GIVE_C2_TOKEN" Destination="REQ_F_C6" Condition="REQ_F_C6" x="2322.2222" y="416.66666" />
+      <ECTransition Source="REQ_F_C6" Destination="GIVE_C2_TOKEN" Condition="1" x="2805.5554" y="383.3333" />
+      <ECTransition Source="GIVE_C2_TOKEN" Destination="WAIT_C2" Condition="RET_F_C2" x="3677.7776" y="838.88885" />
+      <ECTransition Source="WAIT_C2" Destination="DECISION" Condition="REQ&#38;!PE_7" x="4200.0" y="1027.7777" />
+      <ECTransition Source="GIVE_C6_TOKEN" Destination="WAIT_C6" Condition="RET_F_C6" x="3749.9998" y="1699.9999" />
+      <ECTransition Source="WAIT_C6" Destination="DECISION" Condition="REQ&#38;!PE_7" x="4183.333" y="1472.2222" />
+      <ECTransition Source="DECISION" Destination="INTER" Condition="C2_FLAG" x="3633.3333" y="1138.8888" />
+      <ECTransition Source="DECISION" Destination="INTER2" Condition="!C2_FLAG" x="3394.4443" y="1322.2222" />
+      <ECTransition Source="INTER2" Destination="START" Condition="!C6_FLAG" x="2122.2222" y="1316.6666" />
+      <ECTransition Source="INTER2" Destination="GIVE_C6_TOKEN" Condition="C6_FLAG" x="2500.0" y="1583.3333" />
+      <ECTransition Source="INTER" Destination="GIVE_C2_TOKEN" Condition="!C6_FLAG" x="3127.7776" y="899.99994" />
+      <ECTransition Source="INTER" Destination="INTER3" Condition="C6_FLAG" x="3000.0" y="1138.8888" />
+      <ECTransition Source="INTER3" Destination="GIVE_C2_TOKEN" Condition="!PRIORITY" x="2661.111" y="816.6666" />
+      <ECTransition Source="INTER3" Destination="GIVE_C6_TOKEN" Condition="PRIORITY" x="2661.111" y="1194.4445" />
+      <ECTransition Source="GIVE_C6_TOKEN" Destination="REQ_F_C2" Condition="RET_F_C2" x="2605.5554" y="2133.3333" />
+      <ECTransition Source="REQ_F_C2" Destination="GIVE_C6_TOKEN" Condition="1" x="2861.111" y="2150.0" />
+      <ECTransition Source="WAIT_C2" Destination="REQ_F_C2_2" Condition="REQ_F_C2" x="4383.333" y="633.3333" />
+      <ECTransition Source="REQ_F_C2_2" Destination="WAIT_C2" Condition="1" x="4722.222" y="733.3333" />
+      <ECTransition Source="WAIT_C2" Destination="REQ_F_C6_2" Condition="REQ_F_C6" x="4716.6665" y="838.88885" />
+      <ECTransition Source="REQ_F_C6_2" Destination="WAIT_C2" Condition="1" x="4644.4443" y="1005.55554" />
+      <ECTransition Source="WAIT_C6" Destination="REQ_F_C2_3" Condition="REQ_F_C2" x="4627.778" y="1477.7777" />
+      <ECTransition Source="REQ_F_C2_3" Destination="WAIT_C6" Condition="1" x="4816.6665" y="1600.0" />
+      <ECTransition Source="REQ_F_C6_3" Destination="WAIT_C6" Condition="1" x="4727.778" y="1699.9999" />
+      <ECTransition Source="WAIT_C6" Destination="REQ_F_C6_3" Condition="REQ_F_C6" x="4455.555" y="1844.4443" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+    <ST Text="" />
+  </Algorithm>
+  <Algorithm Name="REQ" Comment="Normally executed algorithm" >
+    <ST Text="" />
+  </Algorithm>
+  <Algorithm Name="GIVE_C2_TOKEN" >
+    <Other Language="Java" Text="C2_FLAG.value = false;&#10;System.out.println(&#34;-------------------&#34;);&#10;System.out.println(&#34;GIVE TOKEN TO C2!!&#34;);&#10;System.out.println(&#34;-------------------&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="SET_C6_FLAG" >
+    <Other Language="Java" Text="C6_FLAG.value = true;&#10;if(C2_FLAG.value){&#10;PRIORITY.value = false;&#10;} else {&#10;PRIORITY.value = true;&#10;}&#10;" />
+  </Algorithm>
+  <Algorithm Name="GIVE_C6_TOKEN" >
+    <Other Language="Java" Text="C6_FLAG.value = false;&#10;System.out.println(&#34;-------------------&#34;);&#10;System.out.println(&#34;GIVE TOKEN TO C6!!&#34;);&#10;System.out.println(&#34;-------------------&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="SET_C2_FLAG" >
+    <Other Language="Java" Text="C2_FLAG.value = true;&#10;if(C6_FLAG.value){&#10;PRIORITY.value = true;&#10;} else {&#10;PRIORITY.value = false;&#10;}&#10;" />
+  </Algorithm>
+  </BasicFB>
+</FBType>
