@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK Conveyor_7
   * @author JHC
-  * @version 20221018/JHC
+  * @version 20221021/JHC
   */
 public class Conveyor_7 extends FBInstance
 {
@@ -157,6 +157,7 @@ private void state_RELEASE_TOKEN(){
   eccState = index_RELEASE_TOKEN;
   GToken.serviceEvent(this);
   alg_REL_TOKEN();
+  alg_START();
 state_NO_TOKEN();
 }
 private static final int index_NO_TOKEN = 5;
@@ -166,6 +167,49 @@ private void state_NO_TOKEN(){
 private static final int index_HAVE_TOKEN = 6;
 private void state_HAVE_TOKEN(){
   eccState = index_HAVE_TOKEN;
+  alg_HAVE_TOKEN();
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START2 = 7;
+private void state_CAS_START2(){
+  eccState = index_CAS_START2;
+  alg_START();
+  START.serviceEvent(this);
+state_Wait();
+}
+private static final int index_CAS_STOP2 = 8;
+private void state_CAS_STOP2(){
+  eccState = index_CAS_STOP2;
+  alg_STOP();
+  STOP.serviceEvent(this);
+state_Wait();
+}
+private static final int index_CAS_START3 = 9;
+private void state_CAS_START3(){
+  eccState = index_CAS_START3;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+private static final int index_CAS_STOP3 = 10;
+private void state_CAS_STOP3(){
+  eccState = index_CAS_STOP3;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+private static final int index_Wait = 11;
+private void state_Wait(){
+  eccState = index_Wait;
+}
+private static final int index_Wait2 = 12;
+private void state_Wait2(){
+  eccState = index_Wait2;
+  alg_STOP();
+  CNF.serviceEvent(this);
+  alg_REQ();
 }
 /** The default constructor. */
 public Conveyor_7(){
@@ -191,13 +235,20 @@ public Conveyor_7(){
     if ((eccState == index_HAVE_TOKEN) && (PE.value)) state_RELEASE_TOKEN();
     else if ((eccState == index_NO_TOKEN) && (!PE.value)) state_REQ();
     else if ((eccState == index_HAVE_TOKEN) && (!PE.value)) state_ENTER_CS();
-    else if ((eccState == index_ENTER_CS) && (!PE_13.value)) state_RELEASE_TOKEN();
+    else if ((eccState == index_ENTER_CS) && (PE.value)) state_Wait();
+    else if ((eccState == index_Wait) && (!PE_13.value)) state_RELEASE_TOKEN();
+    else if ((eccState == index_Wait) && (!PE.value)) state_Wait2();
+    else if ((eccState == index_Wait2) && (!PE_13.value)) state_RELEASE_TOKEN();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
+    if ((eccState == index_ENTER_CS)) state_CAS_STOP3();
+    else if ((eccState == index_Wait)) state_CAS_STOP2();
   }
 /** Services the CAS_START event. */
   public void service_CAS_START(){
+    if ((eccState == index_ENTER_CS)) state_CAS_START3();
+    else if ((eccState == index_Wait)) state_CAS_START2();
   }
 /** Services the RToken event. */
   public void service_RToken(){
@@ -207,13 +258,14 @@ public Conveyor_7(){
 public void alg_INIT(){
 MotoRotate.value=true;
 Block.value=false;
-System.out.println("Initialised C7 and released token");
+
+System.out.println(this+" "+MotoRotate.value);
+System.out.println(MotoRotate.value);
 
 }
   /** ALGORITHM REQ IN Java*/
 public void alg_REQ(){
 System.out.println("BAG DETECTED!!");
-
 MotoRotate.value=false;
 
 }
@@ -229,14 +281,19 @@ MotoRotate.value=false;
 }
   /** ALGORITHM CAS_START IN Java*/
 public void alg_CAS_START(){
-System.out.println("Starting again C7");
-System.out.println("Token received C7");
+System.out.println("Starting again");
+System.out.println("Token received");
 MotoRotate.value=true;
 
 }
   /** ALGORITHM REL_TOKEN IN Java*/
 public void alg_REL_TOKEN(){
-System.out.println("Released token from C7");
+System.out.println("Released token from c7");
+
+}
+  /** ALGORITHM HAVE_TOKEN IN Java*/
+public void alg_HAVE_TOKEN(){
+System.out.println("Have the token");
 
 }
 }

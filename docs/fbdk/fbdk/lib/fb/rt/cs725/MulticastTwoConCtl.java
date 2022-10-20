@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK MulticastTwoConCtl
   * @author JHC
-  * @version 20221017/JHC
+  * @version 20221021/JHC
   */
 public class MulticastTwoConCtl extends FBInstance
 {
@@ -124,7 +124,7 @@ public class MulticastTwoConCtl extends FBInstance
  */
   public void connect_PE(BOOL newIV) throws FBRManagementException{
     PE = newIV;
-    MulticastConveyorCTL_FC12.connectIVNoException("PE",PE);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("PE",PE);
     }
 /** Connect the given variable to the input variable PID_in
   * @param newIV The variable to connect
@@ -132,7 +132,7 @@ public class MulticastTwoConCtl extends FBInstance
  */
   public void connect_PID_in(INT newIV) throws FBRManagementException{
     PID_in = newIV;
-    MulticastConveyorCTL_FC12.connectIVNoException("PID_in",PID_in);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("PID_in",PID_in);
     }
 /** Connect the given variable to the input variable Tstamp_in
   * @param newIV The variable to connect
@@ -140,7 +140,7 @@ public class MulticastTwoConCtl extends FBInstance
  */
   public void connect_Tstamp_in(INT newIV) throws FBRManagementException{
     Tstamp_in = newIV;
-    MulticastConveyorCTL_FC12.connectIVNoException("Tstamp_in",Tstamp_in);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("Tstamp_in",Tstamp_in);
     }
 /** Connect the given variable to the input variable MAIN_PE
   * @param newIV The variable to connect
@@ -148,41 +148,41 @@ public class MulticastTwoConCtl extends FBInstance
  */
   public void connect_MAIN_PE(BOOL newIV) throws FBRManagementException{
     MAIN_PE = newIV;
-    MulticastConveyorCTL_FC12.connectIVNoException("MAIN_PE",MAIN_PE);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("MAIN_PE",MAIN_PE);
     }
 /** FB FC11 */
   protected ConveyorCTL FC11 = new ConveyorCTL() ;
-/** FB MulticastConveyorCTL_FC12 */
-  protected MulticastConveyorCTL MulticastConveyorCTL_FC12 = new MulticastConveyorCTL() ;
+/** FB MulticastConveyorCTL_FC12_Two */
+  protected MulticastConveyorCTL MulticastConveyorCTL_FC12_Two = new MulticastConveyorCTL() ;
 /** The default constructor. */
 public MulticastTwoConCtl(){
     super();
     INIT.connectTo(FC11.INIT);
     REQ.connectTo(FC11.REQ);
-    LISTEN.connectTo(MulticastConveyorCTL_FC12.LISTEN);
-    MulticastConveyorCTL_FC12.REPLY.connectTo(REPLY);
-    FC11.INITO.connectTo(MulticastConveyorCTL_FC12.INIT);
-    MulticastConveyorCTL_FC12.CNF.connectTo(CNF);
-    MulticastConveyorCTL_FC12.INITO.connectTo(INITO);
-    START.connectTo(MulticastConveyorCTL_FC12.CAS_STOP);
-    STOP.connectTo(MulticastConveyorCTL_FC12.CAS_START);
-    REQ.connectTo(MulticastConveyorCTL_FC12.REQ);
-    MulticastConveyorCTL_FC12.STOP.connectTo(FC11.CAS_STOP);
-    MulticastConveyorCTL_FC12.START.connectTo(FC11.CAS_START);
+    LISTEN.connectTo(MulticastConveyorCTL_FC12_Two.LISTEN);
+    MulticastConveyorCTL_FC12_Two.REPLY.connectTo(REPLY);
+    FC11.INITO.connectTo(MulticastConveyorCTL_FC12_Two.INIT);
+    MulticastConveyorCTL_FC12_Two.CNF.connectTo(CNF);
+    MulticastConveyorCTL_FC12_Two.INITO.connectTo(INITO);
+    START.connectTo(MulticastConveyorCTL_FC12_Two.CAS_STOP);
+    STOP.connectTo(MulticastConveyorCTL_FC12_Two.CAS_START);
+    REQ.connectTo(MulticastConveyorCTL_FC12_Two.REQ);
+    MulticastConveyorCTL_FC12_Two.STOP.connectTo(FC11.CAS_STOP);
+    MulticastConveyorCTL_FC12_Two.START.connectTo(FC11.CAS_START);
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
-    MulticastConveyorCTL_FC12.connectIVNoException("PE",PE);
-    MulticastConveyorCTL_FC12.connectIVNoException("PID_in",PID_in);
-    MulticastConveyorCTL_FC12.connectIVNoException("Tstamp_in",Tstamp_in);
-    Tstamp_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("Tstamp_out");
-    PID_out = (INT)MulticastConveyorCTL_FC12.ovNamedNoException("PID_out");
-    MotoRotate2 = (BOOL)MulticastConveyorCTL_FC12.ovNamedNoException("MotoRotate");
-    MulticastConveyorCTL_FC12.connectIVNoException("MAIN_PE",MAIN_PE);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("PE",PE);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("PID_in",PID_in);
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("Tstamp_in",Tstamp_in);
+    Tstamp_out = (INT)MulticastConveyorCTL_FC12_Two.ovNamedNoException("Tstamp_out");
+    PID_out = (INT)MulticastConveyorCTL_FC12_Two.ovNamedNoException("PID_out");
+    MotoRotate2 = (BOOL)MulticastConveyorCTL_FC12_Two.ovNamedNoException("MotoRotate");
+    MulticastConveyorCTL_FC12_Two.connectIVNoException("MAIN_PE",MAIN_PE);
     FC11.PE.initializeNoException("0");
     FC11.Block.initializeNoException("0");
     FC11.Candidate.initializeNoException("0");
-    MulticastConveyorCTL_FC12.MyPID.initializeNoException("10");
-    MulticastConveyorCTL_FC12.MyTstamp.initializeNoException("0");
-    MulticastConveyorCTL_FC12.MyLoadDelay.initializeNoException("6");
+    MulticastConveyorCTL_FC12_Two.MyPID.initializeNoException("10");
+    MulticastConveyorCTL_FC12_Two.MyTstamp.initializeNoException("0");
+    MulticastConveyorCTL_FC12_Two.MyLoadDelay.initializeNoException("6");
   }
 /** {@inheritDoc}
  * @param fbName {@inheritDoc}
@@ -192,16 +192,16 @@ public MulticastTwoConCtl(){
   throws FBRManagementException{
     super.initialize(fbName,r);
     FC11.initialize("FC11",r);
-    MulticastConveyorCTL_FC12.initialize("MulticastConveyorCTL_FC12",r);
+    MulticastConveyorCTL_FC12_Two.initialize("MulticastConveyorCTL_FC12_Two",r);
 }
 /** Start the FB instances. */
 public void start( ){
   FC11.start();
-  MulticastConveyorCTL_FC12.start();
+  MulticastConveyorCTL_FC12_Two.start();
 }
 /** Stop the FB instances. */
 public void stop( ){
   FC11.stop();
-  MulticastConveyorCTL_FC12.stop();
+  MulticastConveyorCTL_FC12_Two.stop();
 }
 }

@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK MulticastConveyorCTL
   * @author JHC
-  * @version 20221017/JHC
+  * @version 20221021/JHC
   */
 public class MulticastConveyorCTL extends FBInstance
 {
@@ -309,6 +309,13 @@ private void state_DELAY_UP2(){
   alg_DELAY_UP();
 state_HELD2();
 }
+private static final int index_REQ = 16;
+private void state_REQ(){
+  eccState = index_REQ;
+  alg_TICKCLOCK();
+  CNF.serviceEvent(this);
+state_START();
+}
 /** The default constructor. */
 public MulticastConveyorCTL(){
     super();
@@ -337,6 +344,7 @@ public MulticastConveyorCTL(){
     else if ((eccState == index_HELD2) && (PE.value&DelayElapse.value)) state_TEMP_STOP2();
     else if ((eccState == index_TEMP_STOP2) && (!MAIN_PE.value)) state_TEMP_START2();
     else if ((eccState == index_HELD2)) state_DELAY_UP2();
+    else if ((eccState == index_START) && (PE.value)) state_REQ();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
@@ -378,8 +386,6 @@ YouFirst.value = false;
 
 DelayElapse.value=false;
 DelayCounter.value=0;
-
-LampClock.value++;
 
 }
   /** ALGORITHM START IN Java*/
@@ -445,5 +451,10 @@ DelayElapse.value=true;
 public void alg_DELAY_UP(){
 DelayCounter.value++;
 
+}
+  /** ALGORITHM TICKCLOCK IN Java*/
+public void alg_TICKCLOCK(){
+LampClock.value++;
+System.out.println(this + " Lamport Clock Ticked, Now: "+LampClock.value);
 }
 }

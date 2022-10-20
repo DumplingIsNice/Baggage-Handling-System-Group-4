@@ -84,7 +84,7 @@
       <ECState Name="START" Comment="Initial State" x="1988.8888" y="1022.22217" >
         <ECAction Algorithm="REQ" Output="CNF" />
       </ECState>
-      <ECState Name="INIT" Comment="Initialization" x="1938.8888" y="566.6666" >
+      <ECState Name="INIT" Comment="Initialization" x="1338.8888" y="594.4444" >
         <ECAction Algorithm="INIT" Output="INITO" />
         <ECAction Output="CNF" />
       </ECState>
@@ -144,8 +144,11 @@
       <ECState Name="DELAY_UP2" x="3244.4443" y="3505.5554" >
         <ECAction Algorithm="DELAY_UP" />
       </ECState>
-      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1838.8888" y="838.88885" />
-      <ECTransition Source="INIT" Destination="START" Condition="1" x="2138.889" y="822.22217" />
+      <ECState Name="REQ" x="2172.2222" y="644.4444" >
+        <ECAction Algorithm="TICKCLOCK" Output="CNF" />
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1238.8888" y="866.6666" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="1538.8888" y="849.99994" />
       <ECTransition Source="START" Destination="CAS_START" Condition="CAS_START" x="3066.6665" y="1355.5555" />
       <ECTransition Source="CAS_START" Destination="START" Condition="1" x="3244.4443" y="1222.2222" />
       <ECTransition Source="START" Destination="CAS_STOP" Condition="CAS_STOP" x="3727.7776" y="1022.22217" />
@@ -167,12 +170,14 @@
       <ECTransition Source="TEMP_STOP2" Destination="TEMP_START2" Condition="REQ&#38;!MAIN_PE" x="750.0" y="3794.4443" />
       <ECTransition Source="HELD2" Destination="DELAY_UP2" Condition="REQ" x="2866.6665" y="3283.3333" />
       <ECTransition Source="DELAY_UP2" Destination="HELD2" Condition="1" x="2994.4443" y="3222.2222" />
+      <ECTransition Source="START" Destination="REQ" Condition="REQ&#38;PE" x="1988.8888" y="783.3333" />
+      <ECTransition Source="REQ" Destination="START" Condition="1" x="2172.2222" y="855.55554" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
     <Other Language="Java" Text="System.out.println(&#34;In INT State&#34;);&#10;&#10;MotoRotate.value=true;&#10;Block.value=false;&#10;LampClock.value=MyTstamp.value;&#10;MeFirst.value=false;&#10;YouFirst.value=false;&#10;&#10;DelayElapse.value=false;&#10;DelayCounter.value=0;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
   </Algorithm>
   <Algorithm Name="REQ" Comment="Normally executed algorithm" >
-    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;YouFirst.value = false;&#10;&#10;DelayElapse.value=false;&#10;DelayCounter.value=0;&#10;&#10;LampClock.value++;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;In REQ State&#34;);&#10;&#10;MeFirst.value = false;&#10;YouFirst.value = false;&#10;&#10;DelayElapse.value=false;&#10;DelayCounter.value=0;&#10;" />
   </Algorithm>
   <Algorithm Name="START" >
     <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(this+&#34; Start &#34;+MotoRotate.value);&#10;" />
@@ -197,6 +202,9 @@
   </Algorithm>
   <Algorithm Name="DELAY_UP" >
     <Other Language="Java" Text="DelayCounter.value++;&#10;" />
+  </Algorithm>
+  <Algorithm Name="TICKCLOCK" >
+    <Other Language="Java" Text="LampClock.value++;&#10;System.out.println(this + &#34; Lamport Clock Ticked, Now: &#34;+LampClock.value);&#10;" />
   </Algorithm>
   </BasicFB>
 </FBType>

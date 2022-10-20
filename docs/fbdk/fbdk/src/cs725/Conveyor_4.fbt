@@ -67,33 +67,75 @@
         <ECAction Algorithm="INIT" Output="INITO" />
         <ECAction Output="CNF" />
       </ECState>
-      <ECState Name="REQ" Comment="Normal execution" x="2150.0" y="1183.3333" >
+      <ECState Name="REQ" Comment="Normal execution" x="2155.5554" y="1266.6666" >
         <ECAction Algorithm="REQ" Output="CNF" />
         <ECAction Output="STOP" />
       </ECState>
-      <ECState Name="ENTER_CS" x="2111.111" y="2188.889" >
+      <ECState Name="ENTER_CS" x="2005.5554" y="2372.2222" >
         <ECAction Algorithm="CAS_START" Output="CNF" />
         <ECAction Output="START" />
       </ECState>
-      <ECState Name="RELEASE_TOKEN" x="355.55554" y="2205.5554" >
+      <ECState Name="RELEASE_TOKEN" x="272.2222" y="2211.111" >
         <ECAction Output="GToken" />
         <ECAction Algorithm="REL_TOKEN" />
+        <ECAction Algorithm="START" Output="CNF" />
       </ECState>
       <ECState Name="NO_TOKEN" x="1072.2222" y="1188.8888" >
       </ECState>
       <ECState Name="HAVE_TOKEN" x="1077.7777" y="1661.1111" >
         <ECAction Algorithm="HAVE_TOKEN" Output="CNF" />
       </ECState>
+      <ECState Name="CAS_START1" x="2238.889" y="777.7778" >
+        <ECAction Algorithm="START" Output="START" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_STOP1" x="2222.2222" y="972.22217" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_START2" x="1150.0" y="3455.5554" >
+        <ECAction Algorithm="START" Output="START" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_STOP2" x="1483.3333" y="3105.5554" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_START3" x="3644.4443" y="2927.7776" >
+        <ECAction Algorithm="START" Output="START" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_STOP3" x="2361.111" y="3138.8887" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="Wait" x="1155.5555" y="2722.2222" >
+      </ECState>
+      <ECState Name="Wait2" x="511.11108" y="3016.6665" >
+        <ECAction Algorithm="REQ" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
       <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1644.4443" y="688.88885" />
       <ECTransition Source="INIT" Destination="START" Condition="1" x="1066.6666" y="383.3333" />
       <ECTransition Source="START" Destination="NO_TOKEN" Condition="1" x="1072.2222" y="922.22217" />
       <ECTransition Source="NO_TOKEN" Destination="HAVE_TOKEN" Condition="RToken" x="1077.7777" y="1388.8888" />
-      <ECTransition Source="HAVE_TOKEN" Destination="RELEASE_TOKEN" Condition="REQ&#38;PE" x="605.55554" y="1883.3333" />
-      <ECTransition Source="NO_TOKEN" Destination="REQ" Condition="REQ&#38;!PE" x="1677.7777" y="1272.2222" />
-      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="1" x="1705.5555" y="1188.8888" />
-      <ECTransition Source="HAVE_TOKEN" Destination="ENTER_CS" Condition="REQ&#38;!PE" x="1533.3333" y="1972.2222" />
-      <ECTransition Source="RELEASE_TOKEN" Destination="NO_TOKEN" Condition="1" x="355.55554" y="1238.8888" />
-      <ECTransition Source="ENTER_CS" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="1172.2222" y="2622.2222" />
+      <ECTransition Source="HAVE_TOKEN" Destination="RELEASE_TOKEN" Condition="REQ&#38;PE" x="511.11108" y="1761.1111" />
+      <ECTransition Source="NO_TOKEN" Destination="REQ" Condition="REQ&#38;!PE" x="1716.6666" y="1427.7777" />
+      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="1" x="1711.1111" y="1266.6666" />
+      <ECTransition Source="HAVE_TOKEN" Destination="ENTER_CS" Condition="REQ&#38;!PE" x="1366.6666" y="2372.2222" />
+      <ECTransition Source="RELEASE_TOKEN" Destination="NO_TOKEN" Condition="1" x="272.2222" y="1244.4443" />
+      <ECTransition Source="ENTER_CS" Destination="CAS_START3" Condition="CAS_START" x="3488.8887" y="2511.111" />
+      <ECTransition Source="CAS_START3" Destination="ENTER_CS" Condition="1" x="2872.2222" y="2822.2222" />
+      <ECTransition Source="CAS_STOP3" Destination="ENTER_CS" Condition="1" x="2872.2222" y="2988.8887" />
+      <ECTransition Source="ENTER_CS" Destination="CAS_STOP3" Condition="CAS_STOP" x="2361.111" y="2938.8887" />
+      <ECTransition Source="ENTER_CS" Destination="Wait" Condition="REQ&#38;PE" x="1461.1111" y="2577.7776" />
+      <ECTransition Source="Wait" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="611.1111" y="2433.3333" />
+      <ECTransition Source="Wait" Destination="Wait2" Condition="REQ&#38;!PE" x="772.22217" y="2761.111" />
+      <ECTransition Source="Wait2" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="177.77777" y="2677.7776" />
+      <ECTransition Source="CAS_STOP2" Destination="Wait" Condition="1" x="1772.2222" y="2816.6665" />
+      <ECTransition Source="CAS_START2" Destination="Wait" Condition="1" x="855.55554" y="3333.3333" />
+      <ECTransition Source="Wait" Destination="CAS_STOP2" Condition="CAS_STOP" x="1366.6666" y="2972.2222" />
+      <ECTransition Source="Wait" Destination="CAS_START2" Condition="CAS_START" x="1150.0" y="3205.5554" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
     <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />

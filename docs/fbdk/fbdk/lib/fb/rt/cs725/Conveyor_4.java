@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK Conveyor_4
   * @author JHC
-  * @version 20221018/JHC
+  * @version 20221020/JHC
   */
 public class Conveyor_4 extends FBInstance
 {
@@ -156,6 +156,8 @@ private void state_RELEASE_TOKEN(){
   eccState = index_RELEASE_TOKEN;
   GToken.serviceEvent(this);
   alg_REL_TOKEN();
+  alg_START();
+  CNF.serviceEvent(this);
 state_NO_TOKEN();
 }
 private static final int index_NO_TOKEN = 5;
@@ -166,6 +168,63 @@ private static final int index_HAVE_TOKEN = 6;
 private void state_HAVE_TOKEN(){
   eccState = index_HAVE_TOKEN;
   alg_HAVE_TOKEN();
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START1 = 7;
+private void state_CAS_START1(){
+  eccState = index_CAS_START1;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_STOP1 = 8;
+private void state_CAS_STOP1(){
+  eccState = index_CAS_STOP1;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START2 = 9;
+private void state_CAS_START2(){
+  eccState = index_CAS_START2;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_Wait();
+}
+private static final int index_CAS_STOP2 = 10;
+private void state_CAS_STOP2(){
+  eccState = index_CAS_STOP2;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_Wait();
+}
+private static final int index_CAS_START3 = 11;
+private void state_CAS_START3(){
+  eccState = index_CAS_START3;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+private static final int index_CAS_STOP3 = 12;
+private void state_CAS_STOP3(){
+  eccState = index_CAS_STOP3;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+private static final int index_Wait = 13;
+private void state_Wait(){
+  eccState = index_Wait;
+}
+private static final int index_Wait2 = 14;
+private void state_Wait2(){
+  eccState = index_Wait2;
+  alg_REQ();
+  STOP.serviceEvent(this);
   CNF.serviceEvent(this);
 }
 /** The default constructor. */
@@ -192,13 +251,20 @@ public Conveyor_4(){
     if ((eccState == index_HAVE_TOKEN) && (PE.value)) state_RELEASE_TOKEN();
     else if ((eccState == index_NO_TOKEN) && (!PE.value)) state_REQ();
     else if ((eccState == index_HAVE_TOKEN) && (!PE.value)) state_ENTER_CS();
-    else if ((eccState == index_ENTER_CS) && (!PE_13.value)) state_RELEASE_TOKEN();
+    else if ((eccState == index_ENTER_CS) && (PE.value)) state_Wait();
+    else if ((eccState == index_Wait) && (!PE_13.value)) state_RELEASE_TOKEN();
+    else if ((eccState == index_Wait) && (!PE.value)) state_Wait2();
+    else if ((eccState == index_Wait2) && (!PE_13.value)) state_RELEASE_TOKEN();
   }
 /** Services the CAS_STOP event. */
   public void service_CAS_STOP(){
+    if ((eccState == index_ENTER_CS)) state_CAS_STOP3();
+    else if ((eccState == index_Wait)) state_CAS_STOP2();
   }
 /** Services the CAS_START event. */
   public void service_CAS_START(){
+    if ((eccState == index_ENTER_CS)) state_CAS_START3();
+    else if ((eccState == index_Wait)) state_CAS_START2();
   }
 /** Services the RToken event. */
   public void service_RToken(){

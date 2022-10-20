@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CentralServer" Comment="Composite Function Block Type that operates using Central Server" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-05" Remarks="Renamed from NEWCOMPFB." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-01-08" Remarks="Added DLY FB as example." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-27" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="Candidate" />
+        <With Var="Block" />
+        <With Var="PE" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="Candidate" />
+        <With Var="PE" />
+      </Event>
+      <Event Name="START" >
+        <With Var="Block" />
+      </Event>
+      <Event Name="STOP" >
+        <With Var="Block" />
+      </Event>
+      <Event Name="F_SERVER" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="MotoRotate1" />
+        <With Var="MotoRotate2" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="MotoRotate1" />
+        <With Var="MotoRotate2" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="REQ_TOKEN" >
+      </Event>
+      <Event Name="RET_TOKEN" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="Candidate" Type="BOOL" />
+      <VarDeclaration Name="Block" Type="BOOL" />
+      <VarDeclaration Name="PE" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MotoRotate1" Type="BOOL" />
+      <VarDeclaration Name="MotoRotate2" Type="BOOL" />
+      <VarDeclaration Name="BlockCon" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <FBNetwork >
+    <FB Name="FC11" Type="ConveyorCTL" x="327.77777" y="449.99997" >
+      <Parameter Name="PE" Value="0" />
+      <Parameter Name="Block" Value="0" />
+      <Parameter Name="Candidate" Value="0" />
+    </FB>
+    <FB Name="FC2" Type="CentralServerClient" x="1849.9999" y="449.99997" />
+    <EventConnections>
+      <Connection Source="INIT" Destination="FC11.INIT" dx1="227.77777" />
+      <Connection Source="STOP" Destination="FC2.CAS_STOP" dx1="1722.2222" />
+      <Connection Source="START" Destination="FC2.CAS_START" dx1="1711.1111" />
+      <Connection Source="REQ" Destination="FC2.REQ" dx1="1738.8888" />
+      <Connection Source="FC2.CNF" Destination="CNF" dx1="2627.7776" />
+      <Connection Source="FC2.INITO" Destination="INITO" dx1="2638.8887" />
+      <Connection Source="FC11.INITO" Destination="FC2.INIT" dx1="127.77777" />
+      <Connection Source="FC2.STOP" Destination="FC11.CAS_STOP" dx1="444.44443" dx2="177.77777" dy="1033.3333" />
+      <Connection Source="FC2.START" Destination="FC11.CAS_START" dx1="388.8889" dx2="122.22221" dy="877.7778" />
+      <Connection Source="FC2.REQ_TOKEN" Destination="REQ_TOKEN" dx1="2738.8887" />
+      <Connection Source="FC2.RET_TOKEN" Destination="RET_TOKEN" dx1="2733.3333" />
+      <Connection Source="F_SERVER" Destination="FC2.F_SERVER" dx1="1655.5555" />
+      <Connection Source="REQ" Destination="FC11.REQ" dx1="216.66666" />
+    </EventConnections>
+    <DataConnections>
+      <Connection Source="FC11.MotoRotate" Destination="MotoRotate1" dx1="1066.6666" />
+      <Connection Source="PE" Destination="FC2.PE" dx1="1761.1111" />
+      <Connection Source="Block" Destination="FC2.Block" dx1="1733.3333" />
+      <Connection Source="Candidate" Destination="FC2.Candidate" dx1="1677.7777" />
+      <Connection Source="FC2.MotoRotate" Destination="MotoRotate2" dx1="2722.2222" />
+      <Connection Source="FC2.BlockCon" Destination="BlockCon" dx1="2688.8887" />
+    </DataConnections>
+  </FBNetwork>
+</FBType>

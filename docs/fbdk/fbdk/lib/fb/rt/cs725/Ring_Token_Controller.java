@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK Ring_Token_Controller
   * @author JHC
-  * @version 20221018/JHC
+  * @version 20221020/JHC
   */
 public class Ring_Token_Controller extends FBInstance
 {
@@ -141,6 +141,8 @@ public Ring_Token_Controller(){
     Conveyer_4.STOP.connectTo(FC11.CAS_STOP);
     RToken.connectTo(Conveyer_4.RToken);
     Conveyer_4.GToken.connectTo(GToken);
+    START.connectTo(Conveyer_4.CAS_STOP);
+    STOP.connectTo(Conveyer_4.CAS_START);
     MotoRotate1 = (BOOL)FC11.ovNamedNoException("MotoRotate");
     MotoRotate2 = (BOOL)Conveyer_4.ovNamedNoException("MotoRotate");
     BlockCon = (BOOL)Conveyer_4.ovNamedNoException("BlockCon");

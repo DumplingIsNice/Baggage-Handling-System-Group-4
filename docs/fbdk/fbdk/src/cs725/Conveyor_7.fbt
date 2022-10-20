@@ -68,38 +68,71 @@
         <ECAction Output="CNF" />
         <ECAction Output="GToken" />
       </ECState>
-      <ECState Name="REQ" Comment="Normal execution" x="2150.0" y="1183.3333" >
+      <ECState Name="REQ" Comment="Normal execution" x="2155.5554" y="1266.6666" >
         <ECAction Algorithm="REQ" Output="CNF" />
         <ECAction Output="STOP" />
       </ECState>
-      <ECState Name="ENTER_CS" x="2122.2222" y="2022.2222" >
+      <ECState Name="ENTER_CS" x="2005.5554" y="2372.2222" >
         <ECAction Algorithm="CAS_START" Output="CNF" />
         <ECAction Output="START" />
       </ECState>
-      <ECState Name="RELEASE_TOKEN" x="388.8889" y="2027.7777" >
+      <ECState Name="RELEASE_TOKEN" x="272.2222" y="2211.111" >
         <ECAction Output="GToken" />
         <ECAction Algorithm="REL_TOKEN" />
+        <ECAction Algorithm="START" />
       </ECState>
       <ECState Name="NO_TOKEN" x="1072.2222" y="1188.8888" >
       </ECState>
       <ECState Name="HAVE_TOKEN" x="1077.7777" y="1661.1111" >
+        <ECAction Algorithm="HAVE_TOKEN" Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_START2" x="616.6666" y="3672.2222" >
+        <ECAction Algorithm="START" Output="START" />
+      </ECState>
+      <ECState Name="CAS_STOP2" x="1611.1111" y="3472.2222" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+      </ECState>
+      <ECState Name="CAS_START3" x="2727.7776" y="2838.8887" >
+        <ECAction Algorithm="START" Output="START" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_STOP3" x="1994.4443" y="3205.5554" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="Wait" x="1300.0" y="2833.3333" >
+      </ECState>
+      <ECState Name="Wait2" x="533.3333" y="3055.5554" >
+        <ECAction Algorithm="STOP" Output="CNF" />
+        <ECAction Algorithm="REQ" />
       </ECState>
       <ECTransition Source="START" Destination="INIT" Condition="INIT" x="1644.4443" y="688.88885" />
       <ECTransition Source="INIT" Destination="START" Condition="1" x="1066.6666" y="383.3333" />
       <ECTransition Source="START" Destination="NO_TOKEN" Condition="1" x="1072.2222" y="922.22217" />
       <ECTransition Source="NO_TOKEN" Destination="HAVE_TOKEN" Condition="RToken" x="1077.7777" y="1388.8888" />
-      <ECTransition Source="HAVE_TOKEN" Destination="RELEASE_TOKEN" Condition="REQ&#38;PE" x="638.88885" y="1705.5555" />
-      <ECTransition Source="NO_TOKEN" Destination="REQ" Condition="REQ&#38;!PE" x="1677.7777" y="1272.2222" />
-      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="1" x="1705.5555" y="1188.8888" />
-      <ECTransition Source="HAVE_TOKEN" Destination="ENTER_CS" Condition="REQ&#38;!PE" x="2122.2222" y="1688.8888" />
-      <ECTransition Source="RELEASE_TOKEN" Destination="NO_TOKEN" Condition="1" x="388.8889" y="1061.1111" />
-      <ECTransition Source="ENTER_CS" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="1200.0" y="2522.2222" />
+      <ECTransition Source="HAVE_TOKEN" Destination="RELEASE_TOKEN" Condition="REQ&#38;PE" x="511.11108" y="1761.1111" />
+      <ECTransition Source="NO_TOKEN" Destination="REQ" Condition="REQ&#38;!PE" x="1716.6666" y="1427.7777" />
+      <ECTransition Source="REQ" Destination="NO_TOKEN" Condition="1" x="1711.1111" y="1266.6666" />
+      <ECTransition Source="HAVE_TOKEN" Destination="ENTER_CS" Condition="REQ&#38;!PE" x="1366.6666" y="2372.2222" />
+      <ECTransition Source="RELEASE_TOKEN" Destination="NO_TOKEN" Condition="1" x="272.2222" y="1244.4443" />
+      <ECTransition Source="ENTER_CS" Destination="CAS_START3" Condition="CAS_START" x="2727.7776" y="2672.2222" />
+      <ECTransition Source="CAS_START3" Destination="ENTER_CS" Condition="1" x="2466.6665" y="2705.5554" />
+      <ECTransition Source="CAS_STOP3" Destination="ENTER_CS" Condition="1" x="2505.5554" y="3055.5554" />
+      <ECTransition Source="ENTER_CS" Destination="CAS_STOP3" Condition="CAS_STOP" x="2255.5554" y="2983.3333" />
+      <ECTransition Source="ENTER_CS" Destination="Wait" Condition="REQ&#38;PE" x="1699.9999" y="2694.4443" />
+      <ECTransition Source="Wait" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="1166.6666" y="2572.2222" />
+      <ECTransition Source="Wait" Destination="Wait2" Condition="REQ&#38;!PE" x="861.1111" y="2833.3333" />
+      <ECTransition Source="Wait2" Destination="RELEASE_TOKEN" Condition="REQ&#38;!PE_13" x="272.2222" y="2594.4443" />
+      <ECTransition Source="Wait" Destination="CAS_STOP2" Condition="CAS_STOP" x="1500.0" y="3249.9998" />
+      <ECTransition Source="CAS_STOP2" Destination="Wait" Condition="1" x="1611.1111" y="3055.5554" />
+      <ECTransition Source="CAS_START2" Destination="Wait" Condition="1" x="1138.8888" y="3327.7776" />
+      <ECTransition Source="Wait" Destination="CAS_START2" Condition="CAS_START" x="616.6666" y="3377.7776" />
     </ECC>
   <Algorithm Name="INIT" Comment="Initialization algorithm" >
-    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;System.out.println(&#34;Initialised C7 and released token&#34;);&#10;" />
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;Block.value=false;&#10;&#10;System.out.println(this+&#34; &#34;+MotoRotate.value);&#10;System.out.println(MotoRotate.value);&#10;" />
   </Algorithm>
   <Algorithm Name="REQ" Comment="Normally executed algorithm" >
-    <Other Language="Java" Text="System.out.println(&#34;BAG DETECTED!!&#34;);&#10;&#10;MotoRotate.value=false;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;BAG DETECTED!!&#34;);&#10;MotoRotate.value=false;&#10;" />
   </Algorithm>
   <Algorithm Name="START" >
     <Other Language="Java" Text="MotoRotate.value=true;&#10;" />
@@ -108,10 +141,13 @@
     <Other Language="Java" Text="MotoRotate.value=false;&#10;" />
   </Algorithm>
   <Algorithm Name="CAS_START" >
-    <Other Language="Java" Text="System.out.println(&#34;Starting again C7&#34;);&#10;System.out.println(&#34;Token received C7&#34;);&#10;MotoRotate.value=true;&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;Starting again&#34;);&#10;System.out.println(&#34;Token received&#34;);&#10;MotoRotate.value=true;&#10;" />
   </Algorithm>
   <Algorithm Name="REL_TOKEN" >
-    <Other Language="Java" Text="System.out.println(&#34;Released token from C7&#34;);&#10;" />
+    <Other Language="Java" Text="System.out.println(&#34;Released token from c7&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="HAVE_TOKEN" >
+    <Other Language="Java" Text="System.out.println(&#34;Have the token&#34;);&#10;" />
   </Algorithm>
   </BasicFB>
 </FBType>

@@ -5,7 +5,7 @@ import fb.rt.*;
 import fb.rt.events.*;
 /** FUNCTION_BLOCK SERVER
   * @author JHC
-  * @version 20221018/JHC
+  * @version 20221019/JHC
   */
 public class SERVER extends FBInstance
 {

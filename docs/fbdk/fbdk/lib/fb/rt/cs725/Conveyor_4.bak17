@@ -1,0 +1,295 @@
+/* Copyright (c)2022 Rockwell Automation. All rights reserved. */
+package fb.rt.cs725;
+import fb.datatype.*;
+import fb.rt.*;
+import fb.rt.events.*;
+/** FUNCTION_BLOCK Conveyor_4
+  * @author JHC
+  * @version 20221019/JHC
+  */
+public class Conveyor_4 extends FBInstance
+{
+/** Input event qualifier */
+  public BOOL PE = new BOOL();
+/** VAR Block */
+  public BOOL Block = new BOOL();
+/** VAR Candidate */
+  public BOOL Candidate = new BOOL();
+/** VAR PE_13 */
+  public BOOL PE_13 = new BOOL();
+/** Output event qualifier */
+  public BOOL MotoRotate = new BOOL();
+/** VAR BlockCon */
+  public BOOL BlockCon = new BOOL();
+/** VAR lastPE */
+  public BOOL lastPE = new BOOL();
+/** VAR lastBlock */
+  public BOOL lastBlock = new BOOL();
+/** Initialization Request */
+ public EventServer INIT = new EventInput(this);
+/** Normal Execution Request */
+ public EventServer REQ = new EventInput(this);
+/** EVENT CAS_STOP */
+ public EventServer CAS_STOP = new EventInput(this);
+/** EVENT CAS_START */
+ public EventServer CAS_START = new EventInput(this);
+/** EVENT RToken */
+ public EventServer RToken = new EventInput(this);
+/** Initialization Confirm */
+ public EventOutput INITO = new EventOutput();
+/** Execution Confirmation */
+ public EventOutput CNF = new EventOutput();
+/** EVENT STOP */
+ public EventOutput STOP = new EventOutput();
+/** EVENT START */
+ public EventOutput START = new EventOutput();
+/** EVENT GToken */
+ public EventOutput GToken = new EventOutput();
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventServer eiNamed(String s){
+    if("INIT".equals(s)) return INIT;
+    if("REQ".equals(s)) return REQ;
+    if("CAS_STOP".equals(s)) return CAS_STOP;
+    if("CAS_START".equals(s)) return CAS_START;
+    if("RToken".equals(s)) return RToken;
+    return super.eiNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+*/
+  public EventOutput eoNamed(String s){
+    if("INITO".equals(s)) return INITO;
+    if("CNF".equals(s)) return CNF;
+    if("STOP".equals(s)) return STOP;
+    if("START".equals(s)) return START;
+    if("GToken".equals(s)) return GToken;
+    return super.eoNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc}
+*/
+  public ANY ivNamed(String s) throws FBRManagementException{
+    if("PE".equals(s)) return PE;
+    if("Block".equals(s)) return Block;
+    if("Candidate".equals(s)) return Candidate;
+    if("PE_13".equals(s)) return PE_13;
+    return super.ivNamed(s);}
+/** {@inheritDoc}
+* @param s {@inheritDoc}
+* @return {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc}
+*/
+  public ANY ovNamed(String s) throws FBRManagementException{
+    if("MotoRotate".equals(s)) return MotoRotate;
+    if("BlockCon".equals(s)) return BlockCon;
+    return super.ovNamed(s);}
+/** {@inheritDoc}
+* @param ivName {@inheritDoc}
+* @param newIV {@inheritDoc}
+* @throws FBRManagementException {@inheritDoc} */
+  public void connectIV(String ivName, ANY newIV)
+    throws FBRManagementException{
+    if("PE".equals(ivName)) connect_PE((BOOL)newIV);
+    else if("Block".equals(ivName)) connect_Block((BOOL)newIV);
+    else if("Candidate".equals(ivName)) connect_Candidate((BOOL)newIV);
+    else if("PE_13".equals(ivName)) connect_PE_13((BOOL)newIV);
+    else super.connectIV(ivName, newIV);
+    }
+/** Connect the given variable to the input variable PE
+  * @param newIV The variable to connect
+ */
+  public void connect_PE(BOOL newIV){
+    PE = newIV;
+    }
+/** Connect the given variable to the input variable Block
+  * @param newIV The variable to connect
+ */
+  public void connect_Block(BOOL newIV){
+    Block = newIV;
+    }
+/** Connect the given variable to the input variable Candidate
+  * @param newIV The variable to connect
+ */
+  public void connect_Candidate(BOOL newIV){
+    Candidate = newIV;
+    }
+/** Connect the given variable to the input variable PE_13
+  * @param newIV The variable to connect
+ */
+  public void connect_PE_13(BOOL newIV){
+    PE_13 = newIV;
+    }
+private static final int index_START = 0;
+private void state_START(){
+  eccState = index_START;
+state_NO_TOKEN();
+}
+private static final int index_INIT = 1;
+private void state_INIT(){
+  eccState = index_INIT;
+  alg_INIT();
+  INITO.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_START();
+}
+private static final int index_REQ = 2;
+private void state_REQ(){
+  eccState = index_REQ;
+  alg_REQ();
+  CNF.serviceEvent(this);
+  STOP.serviceEvent(this);
+state_NO_TOKEN();
+}
+private static final int index_ENTER_CS = 3;
+private void state_ENTER_CS(){
+  eccState = index_ENTER_CS;
+  alg_CAS_START();
+  CNF.serviceEvent(this);
+  START.serviceEvent(this);
+}
+private static final int index_RELEASE_TOKEN = 4;
+private void state_RELEASE_TOKEN(){
+  eccState = index_RELEASE_TOKEN;
+  GToken.serviceEvent(this);
+  alg_REL_TOKEN();
+state_NO_TOKEN();
+}
+private static final int index_NO_TOKEN = 5;
+private void state_NO_TOKEN(){
+  eccState = index_NO_TOKEN;
+}
+private static final int index_HAVE_TOKEN = 6;
+private void state_HAVE_TOKEN(){
+  eccState = index_HAVE_TOKEN;
+  alg_HAVE_TOKEN();
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START1 = 7;
+private void state_CAS_START1(){
+  eccState = index_CAS_START1;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_STOP1 = 8;
+private void state_CAS_STOP1(){
+  eccState = index_CAS_STOP1;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START2 = 9;
+private void state_CAS_START2(){
+  eccState = index_CAS_START2;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_STOP2 = 10;
+private void state_CAS_STOP2(){
+  eccState = index_CAS_STOP2;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+}
+private static final int index_CAS_START3 = 11;
+private void state_CAS_START3(){
+  eccState = index_CAS_START3;
+  alg_START();
+  START.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+private static final int index_CAS_STOP3 = 12;
+private void state_CAS_STOP3(){
+  eccState = index_CAS_STOP3;
+  alg_STOP();
+  STOP.serviceEvent(this);
+  CNF.serviceEvent(this);
+state_ENTER_CS();
+}
+/** The default constructor. */
+public Conveyor_4(){
+    super();
+    lastPE.initializeNoException("1");
+    lastBlock.initializeNoException("0");
+  }
+/** {@inheritDoc}
+* @param e {@inheritDoc} */
+  public void serviceEvent(EventServer e){
+    if (e == INIT) service_INIT();
+    else if (e == REQ) service_REQ();
+    else if (e == CAS_STOP) service_CAS_STOP();
+    else if (e == CAS_START) service_CAS_START();
+    else if (e == RToken) service_RToken();
+  }
+/** Services the INIT event. */
+  public void service_INIT(){
+    if ((eccState == index_START)) state_INIT();
+  }
+/** Services the REQ event. */
+  public void service_REQ(){
+    if ((eccState == index_HAVE_TOKEN) && (PE.value)) state_RELEASE_TOKEN();
+    else if ((eccState == index_NO_TOKEN) && (!PE.value)) state_REQ();
+    else if ((eccState == index_HAVE_TOKEN) && (!PE.value)) state_ENTER_CS();
+    else if ((eccState == index_ENTER_CS) && (!PE_13.value)) state_RELEASE_TOKEN();
+  }
+/** Services the CAS_STOP event. */
+  public void service_CAS_STOP(){
+    if ((eccState == index_ENTER_CS)) state_CAS_STOP3();
+  }
+/** Services the CAS_START event. */
+  public void service_CAS_START(){
+    if ((eccState == index_ENTER_CS)) state_CAS_START3();
+  }
+/** Services the RToken event. */
+  public void service_RToken(){
+    if ((eccState == index_NO_TOKEN)) state_HAVE_TOKEN();
+  }
+  /** ALGORITHM INIT IN Java*/
+public void alg_INIT(){
+MotoRotate.value=true;
+Block.value=false;
+
+System.out.println(this+" "+MotoRotate.value);
+System.out.println(MotoRotate.value);
+
+}
+  /** ALGORITHM REQ IN Java*/
+public void alg_REQ(){
+System.out.println("BAG DETECTED!!");
+MotoRotate.value=false;
+
+}
+  /** ALGORITHM START IN Java*/
+public void alg_START(){
+MotoRotate.value=true;
+
+}
+  /** ALGORITHM STOP IN Java*/
+public void alg_STOP(){
+MotoRotate.value=false;
+
+}
+  /** ALGORITHM CAS_START IN Java*/
+public void alg_CAS_START(){
+System.out.println("Starting again");
+System.out.println("Token received");
+MotoRotate.value=true;
+
+}
+  /** ALGORITHM REL_TOKEN IN Java*/
+public void alg_REL_TOKEN(){
+System.out.println("Released token from c4");
+
+}
+  /** ALGORITHM HAVE_TOKEN IN Java*/
+public void alg_HAVE_TOKEN(){
+System.out.println("Have the token");
+
+}
+}

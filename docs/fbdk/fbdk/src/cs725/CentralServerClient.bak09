@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FBType SYSTEM "http://www.holobloc.com/xml/LibraryElement.dtd" >
+<FBType Name="CentralServerClient" Comment="Client Function Block Type for Central Server ME Algorithm" >
+  <Identification Standard="61499-2" />
+  <VersionInfo Organization="Rockwell Automation" Version="0.2" Author="JHC" Date="2003-12-04" Remarks="Renamed for better indexing." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.1" Author="JHC" Date="2002-11-05" Remarks="Corrected missing ST element in Algorithm REQ." />
+  <VersionInfo Organization="Rockwell Automation" Version="0.0" Author="JHC" Date="2000-05-30" />
+  <CompilerInfo header="package fb.rt.cs725;" >
+  </CompilerInfo>
+  <InterfaceList>
+    <EventInputs>
+      <Event Name="INIT" Comment="Initialization Request" >
+        <With Var="PE" />
+        <With Var="Block" />
+        <With Var="Candidate" />
+      </Event>
+      <Event Name="REQ" Comment="Normal Execution Request" >
+        <With Var="PE" />
+        <With Var="Block" />
+        <With Var="Candidate" />
+      </Event>
+      <Event Name="CAS_STOP" >
+      </Event>
+      <Event Name="CAS_START" >
+      </Event>
+      <Event Name="F_SERVER" >
+      </Event>
+    </EventInputs>
+    <EventOutputs>
+      <Event Name="INITO" Comment="Initialization Confirm" >
+        <With Var="MotoRotate" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="CNF" Comment="Execution Confirmation" >
+        <With Var="MotoRotate" />
+        <With Var="BlockCon" />
+      </Event>
+      <Event Name="STOP" >
+      </Event>
+      <Event Name="START" >
+      </Event>
+      <Event Name="REQ_TOKEN" >
+      </Event>
+      <Event Name="RET_TOKEN" >
+      </Event>
+    </EventOutputs>
+    <InputVars>
+      <VarDeclaration Name="PE" Type="BOOL" Comment="Input event qualifier" />
+      <VarDeclaration Name="Block" Type="BOOL" />
+      <VarDeclaration Name="Candidate" Type="BOOL" />
+    </InputVars>
+    <OutputVars>
+      <VarDeclaration Name="MotoRotate" Type="BOOL" Comment="Output event qualifier" />
+      <VarDeclaration Name="BlockCon" Type="BOOL" />
+    </OutputVars>
+  </InterfaceList>
+  <BasicFB>
+    <InternalVars>
+      <VarDeclaration Name="lastPE" Type="BOOL" InitialValue="1" />
+      <VarDeclaration Name="lastBlock" Type="BOOL" InitialValue="0" />
+    </InternalVars>
+    <ECC >
+      <ECState Name="START" Comment="Initial State" x="2944.4443" y="877.7778" >
+      </ECState>
+      <ECState Name="INIT" Comment="Initialization" x="2850.0" y="311.11108" >
+        <ECAction Algorithm="INIT" Output="INITO" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="REQ" Comment="Normal execution" x="3272.2222" y="1461.1111" >
+        <ECAction Algorithm="REQ" Output="CNF" />
+        <ECAction Output="STOP" />
+        <ECAction Output="REQ_TOKEN" />
+      </ECState>
+      <ECState Name="CAS_START" x="4638.8887" y="1088.8888" >
+        <ECAction Algorithm="START" Output="START" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="CAS_STOP" x="4322.222" y="550.0" >
+        <ECAction Algorithm="STOP" Output="STOP" />
+        <ECAction Output="CNF" />
+      </ECState>
+      <ECState Name="TOKEN_RECEIVED" x="1450.0" y="1138.8888" >
+        <ECAction Algorithm="TOKEN_REC" Output="CNF" />
+        <ECAction Output="START" />
+      </ECState>
+      <ECState Name="TOKEN_RETURN" x="972.22217" y="550.0" >
+        <ECAction Algorithm="TOKEN_RETURN" Output="RET_TOKEN" />
+      </ECState>
+      <ECState Name="CAS_STOP_2" x="522.2222" y="1572.2222" >
+        <ECAction Algorithm="STOP" Output="CNF" />
+        <ECAction Output="STOP" />
+      </ECState>
+      <ECState Name="CAS" x="3105.5554" y="2072.2222" >
+        <ECAction Algorithm="PRINT" />
+      </ECState>
+      <ECState Name="CAS2" x="1844.4443" y="2027.7777" >
+      </ECState>
+      <ECTransition Source="START" Destination="INIT" Condition="INIT" x="2850.0" y="588.88885" />
+      <ECTransition Source="INIT" Destination="START" Condition="1" x="2644.4443" y="600.0" />
+      <ECTransition Source="START" Destination="REQ" Condition="REQ&#38;!PE" x="3094.4443" y="1166.6666" />
+      <ECTransition Source="START" Destination="CAS_START" Condition="CAS_START" x="3883.3333" y="1088.8888" />
+      <ECTransition Source="CAS_START" Destination="START" Condition="1" x="4044.4443" y="961.1111" />
+      <ECTransition Source="START" Destination="CAS_STOP" Condition="CAS_STOP" x="3749.9998" y="700.0" />
+      <ECTransition Source="CAS_STOP" Destination="START" Condition="1" x="4072.2222" y="783.3333" />
+      <ECTransition Source="REQ" Destination="TOKEN_RECEIVED" Condition="F_SERVER" x="1916.6666" y="1461.1111" />
+      <ECTransition Source="TOKEN_RECEIVED" Destination="TOKEN_RETURN" Condition="REQ&#38;PE" x="1055.5555" y="827.7778" />
+      <ECTransition Source="TOKEN_RETURN" Destination="START" Condition="1" x="1933.3333" y="877.7778" />
+      <ECTransition Source="TOKEN_RECEIVED" Destination="CAS_STOP_2" Condition="CAS_STOP" x="944.4444" y="1366.6666" />
+      <ECTransition Source="CAS_STOP_2" Destination="TOKEN_RECEIVED" Condition="CAS_START" x="522.2222" y="1333.3333" />
+      <ECTransition Source="REQ" Destination="CAS" Condition="CAS_STOP" x="3455.5554" y="1833.3333" />
+      <ECTransition Source="CAS" Destination="CAS2" Condition="F_SERVER" x="2477.7776" y="2027.7777" />
+      <ECTransition Source="CAS" Destination="REQ" Condition="CAS_START" x="2988.8887" y="1755.5555" />
+      <ECTransition Source="CAS2" Destination="TOKEN_RECEIVED" Condition="CAS_START" x="1566.6666" y="1694.4443" />
+    </ECC>
+  <Algorithm Name="INIT" Comment="Initialization algorithm" >
+    <ST Text="MotoRotate := TRUE;&#10;Block := FALSE;&#10;" />
+  </Algorithm>
+  <Algorithm Name="REQ" Comment="Normally executed algorithm" >
+    <Other Language="Java" Text="System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;BAG DETECTED BY IN CS1&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;MotoRotate.value=false;&#10;" />
+  </Algorithm>
+  <Algorithm Name="START" >
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;" />
+  </Algorithm>
+  <Algorithm Name="STOP" >
+    <Other Language="Java" Text="MotoRotate.value=false;&#10;" />
+  </Algorithm>
+  <Algorithm Name="TOKEN_REC" >
+    <Other Language="Java" Text="MotoRotate.value=true;&#10;System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN RECEIVED IN CS 1&#34;) ;&#10;System.out.println(&#34;----------------&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="TOKEN_RETURN" >
+    <Other Language="Java" Text="System.out.println(&#34;----------------&#34;);&#10;System.out.println(&#34;TOKEN IS BEING RETURNED in CS 1&#34;);&#10;System.out.println(&#34;----------------&#34;);&#10;" />
+  </Algorithm>
+  <Algorithm Name="PRINT" >
+    <Other Language="Java" Text="System.out.println(&#34;----------STATE REACHED------&#34;);&#10;" />
+  </Algorithm>
+  </BasicFB>
+</FBType>
